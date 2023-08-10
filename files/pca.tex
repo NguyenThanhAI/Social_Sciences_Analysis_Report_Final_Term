@@ -1,0 +1,42 @@
+Ta sẽ sử dụng phương pháp học không giám sát là phân cụm.
+        Nhưng nếu để nguyên dữ liệu, các điểm dữ liệu có số chiều rất lớn.
+        Để việc phân tích hiệu quả, ta sẽ giảm chiều dữ liệu và phân cụm các điểm dữ liệu trên không gian đã được giảm chiều.
+        Ta sẽ gán các cụm là các nhãn giả với từng mẫu dữ liệu.
+        Ta thực hiện huấn luyện một mô hình phân loại trên dữ liệu đã được giảm chiều dùng PCA và nhãn tương ứng với các cụm.
+        Sau khi có được mô hình phân loại ta sẽ biển đổi các trọng số được huấn luyện từ không gian giảm chiều trở lại không gian các đặc trưng gốc từ đó ta xác định những yếu tố ảnh hưởng nhiều đến việc phân loại sinh viên theo khả năng chơi game.
+        Ta có mã giả thực hiện PCA:
+
+        \begin{algorithm}[h!]
+            \DontPrintSemicolon
+            \KwIn{Dữ liệu $\mathcal{D} \in \mathbb{R}^{N \times d}$, tỷ lệ thông tin giữ lại $\alpha$}
+
+            $\bold{\mu} \gets \dfrac{1}{N} \sum_{i=1}^N \bold{x}_i$\;
+            $\bold{Z} \gets \mathcal{D} - \bold{\mu}^T$\;
+            $\bold{\Sigma} \gets \dfrac{1}{N}\bold{Z}^T \bold{Z}$\;
+            Tính các trị riêng $\lambda_1, \lambda_2, \dots, \lambda_d$ và các vector riêng tương ứng $\bold{e}_1, \bold{e}_2, \dots, \bold{e}_d$\;
+            $f(r) \gets \dfrac{\sum_{i=1}^r \lambda_i}{\sum_{j=1}^d \lambda_j}$\;
+            Tìm $r$ nhỏ nhất sao cho $f(r) \geq \alpha$\;
+            $\bold{U} \gets \begin{bmatrix} \bold{e}_1  & \bold{e}_2  & \dots  & \bold{e}_r \end{bmatrix}$\;
+            $\mathcal{D}_r \gets \mathcal{D} \times \bold{U}$\;
+            \Return{$\mathcal{D}_r$}\;
+            \caption{Thuật toán thực hiện PCA}
+            \label{alg:PCA}
+        \end{algorithm}
+
+        Với:
+
+        \begin{equation*}
+            \mathcal{D} = \begin{bmatrix}
+                \bold{x}_1^T \\ \bold{x}_2 \\ \vdots \\ \bold{x}_N^T
+            \end{bmatrix} \in \mathbb{R}^{N \times d}
+        \end{equation*}
+        và:
+
+        \begin{equation*}
+            \bold{U} = \begin{bmatrix}
+                \bold{e}_1 & \bold{e}_2 & \dots & \bold{e}_r
+            \end{bmatrix} \in \mathbb{R}^{d \times r}
+        \end{equation*}
+
+        Khi ta tìm được các trọng số được huấn luyện của mô hình phân loại là $\bold{W}_{PCA} \in \mathbb{R}^{\mathrm{c} \times r}$ ($c$ là số lớp).
+        Ta tìm các trọng số trong không gian dữ liệu ban đầu là $\bold{W} \in \mathbb{R}^{\mathrm{c} \times d}$ bằng công thức $\bold{W} =   \bold{W}_{PCA} \times \bold{U}^T$.
