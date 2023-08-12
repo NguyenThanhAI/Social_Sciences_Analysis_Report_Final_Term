@@ -1,27 +1,30 @@
 Random forest là một phương pháp học kết hợp (ensemble) cho các bài toán phân lớp, hồi quy bằng việc xây dựng nhiều cây quyết định (Decision Tree) khi huấn luyện. Với bài toàn phân loại, đầu ra của Random forest là lớp tương ứng được lựa chọn bởi đa số các cây quyết định. Random forest giúp giảm nhẹ đặc tính overfit với tập huấn luyện ở Cây quyết định, vì vậy thường nó sẽ có độ chính xác cao hơn sử dụng mô hình Cây quyết định.
 
-Random forest cho bài toán phân loại được xây dựng dựa trên các thành phần sau:
-\begin{itemize}
-    \item Các cây quyết định:
-          Các cây quyết định là phương pháp phổ biến cho các bài toán học máy. Cây có số bậc càng cao thì càng có khả năng học được những khuôn mẫu bất quy tắc từ dữ liệu huấn luyện, hay nói cách khác, chúng \emph{overfit} đữ liệu huấn luyện. Random forest cho bài toán phân loại là phương pháp lấy biểu quyết của nhiều cây quyết định, huấn luyện theo những hướng khách nhau trên cùng một tập huấn luyện, với mục tiêu giảm \emph{variance},đồng nghĩa với đó là tăng một chút \emph{bias} và mất mát một lượng nhỏ năng lực diễn giải (\emph{interpretability}), nhưng đổi lại sẽ giúp tăng cường năng lực của mô hình cuối.
-    \item Bagging: Thuật toán huấn luyện cho Random forest sử dụng kỹ thuật \emph{boostrap aggregating}, hay còn gọi là \emph{bagging}. Với một tập huấn luyện cho trước $X = x_1,\dots,x_n$, và biến phản hồi $Y=y_1,\dots,y_n$, bagging lặp lại việc lựa chọn một mẫu ngẫu nhiên thay cho tập huấn luyện và huấn luyện các Cây cho các mẫu dữ liệu này:
-          \begin{algorithm}[h!]
-              \DontPrintSemicolon
-              Với $b = 1,\dots,B:$
-              \begin{itemize}
-                  \item 1. Lấy $n$ mẫu từ dữ liệu $X, Y$; gọi là $X_b, Y_b$
-                  \item 2. Huấn luyện một cây phân loại trên $X_b, Y_b$
-              \end{itemize}
-              \caption{Thuật toán Bagging}
-              \label{alg:Bagging}
-          \end{algorithm}
-          Sau khi huấn luyện, các dự đoán cho dữ liệu chưa nhìn thấy $x'$ được xác định bằng cách biểu quyết (\emph{vote}) theo đa số.
-    \item Feature Bagging: 
-          Ngoài ra, Random forest cũng có một phương pháp bagging khác gọi là \emph{feature bagging}, ý tưởng là tại mỗi bước chia ứng viên trong quá trình học, thuật toán sẽ chọn ra một tập con ngẫu nhiên các đặc trưng. Lí do là vì, nếu một nhóm đặc trưng (\emph{feature}) rất tốt trong việc dự đoán biến phản hồi, thì những feature này sẽ phải được lựa chọn nhiều lần trong các Cây. Ở một bài toán phân loại điển hình với $p$ đặc trưng, $\sqrt{p}$ các đặc trưng thường được sử dụng ở mỗi bước chia. 
-\end{itemize}
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.6\textwidth]{figures/Random_forest_diagram_complete.png} % độ rộng ảnh bằng 0.6 độ rộng tối đa của một dòng
     \caption{Biểu đồ của một mô hình Random forest} % caption của ảnh
-    \label{fig:1} % label của ảnh dùng để reference ảnh. Trong bài viết có chỗ nào cần nói "tại hình 1" thì viết "tại hình \ref{fig:1}"
+    \label{fig:2} % label của ảnh dùng để reference ảnh. Trong bài viết có chỗ nào cần nói "tại hình 1" thì viết "tại hình \ref{fig:1}"
 \end{figure}
+
+Random forest cho bài toán phân loại được xây dựng dựa trên các thành phần sau:
+\subsubsection{Các cây quyết định:}
+Cây quyết định là phương pháp phổ biến được sử dụng cho các bài toán học máy. 
+Để xây dựng một cây quyết định, có nhiều thuật toán được sử dụng như $ID3, CART,\dots$. Tương ứng với mỗi thuật toán, sẽ có các chỉ số khác nhau được sử dụng để đánh giá. Ví dụ như thuật toán $ID3$ sử dụng chỉ số \emph{information gain}, thuật toán \emph{CART} sử dụng chỉ số \emph{Gini index}. Ở đây chúng em xin đề cập tới thuật toán \emph{CART} với chỉ số \emph{Gini index}:
+
+Cây có số bậc càng cao thì càng có khả năng học được những khuôn mẫu bất quy tắc từ dữ liệu huấn luyện, hay nói cách khác, chúng \emph{overfit} đữ liệu huấn luyện. Random forest cho bài toán phân loại là phương pháp lấy biểu quyết của nhiều cây quyết định, huấn luyện theo những hướng khách nhau trên cùng một tập huấn luyện, với mục tiêu giảm \emph{variance},đồng nghĩa với đó là tăng một chút \emph{bias} và mất mát một lượng nhỏ năng lực diễn giải (\emph{interpretability}), nhưng đổi lại sẽ giúp tăng cường năng lực của mô hình cuối.
+\subsubsection{Bagging:} Thuật toán huấn luyện cho Random forest sử dụng kỹ thuật \emph{boostrap aggregating}, hay còn gọi là \emph{bagging}. Với một tập huấn luyện cho trước $X = x_1,\dots,x_n$, và biến phản hồi $Y=y_1,\dots,y_n$, bagging lặp lại việc lựa chọn một mẫu ngẫu nhiên thay cho tập huấn luyện và huấn luyện các Cây cho các mẫu dữ liệu này:
+      \begin{algorithm}[h!]
+          \DontPrintSemicolon
+          Với $b = 1,\dots,B:$
+          \begin{itemize}
+              \item 1. Lấy $n$ mẫu từ dữ liệu $X, Y$; gọi là $X_b, Y_b$
+              \item 2. Huấn luyện một cây phân loại trên $X_b, Y_b$
+          \end{itemize}
+          \caption{Thuật toán Bagging}
+          \label{alg:Bagging}
+      \end{algorithm}
+      Sau khi huấn luyện, các dự đoán cho dữ liệu chưa nhìn thấy $x'$ được xác định bằng cách biểu quyết (\emph{vote}) theo đa số.
+\subsubsection{Feature Bagging:} 
+      Ngoài ra, Random forest cũng có một phương pháp bagging khác gọi là \emph{feature bagging}, ý tưởng là tại mỗi bước chia ứng viên trong quá trình học, thuật toán sẽ chọn ra một tập con ngẫu nhiên các đặc trưng. Lí do là vì, nếu một nhóm đặc trưng (\emph{feature}) rất tốt trong việc dự đoán biến phản hồi, thì những feature này sẽ phải được lựa chọn nhiều lần trong các Cây. Ở một bài toán phân loại điển hình với $p$ đặc trưng, $\sqrt{p}$ các đặc trưng thường được sử dụng ở mỗi bước chia. 
+
