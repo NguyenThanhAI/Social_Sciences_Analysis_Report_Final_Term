@@ -23,6 +23,9 @@
 \usepackage{pythonhighlight}
 \usepackage{float}
 \setglossarystyle{superraggedheaderborder}
+
+
+
 \pagestyle{fancy}
 %\usepackage[style=numeric,sortcites]{biblatex}
 %\addbibresource{ref.bib}
@@ -138,28 +141,28 @@
     %----------------------------------------------------------------------------------------
     \begin{minipage}{0.4\textwidth}
         \begin{flushleft} \large
-        \emph{Giảng viên hướng dẫn:} \\
-        TS. Trịnh Quốc Anh % Supervisor's Name
+            \emph{Giảng viên hướng dẫn:} \\
+            TS. Trịnh Quốc Anh % Supervisor's Name
         \end{flushleft}
     \end{minipage}\\[0.5cm]
 
     \begin{minipage}{0.4\textwidth}
-    \begin{flushleft} \small
-    \emph{Nhóm học viên thực hiện:}\\
-    Nguyễn Chí Thanh \\
-    MSHV: 21007925 \\ % Your name
-    Nguyễn Đức Thịnh \\
-    MSHV: 21007923 \\
-    Vũ Ngọc Đại \\
-    MSHV: 21007977 \\
-    Vũ Minh Hưng \\
-    MSHV: 21007973 \\
-    Nguyễn Tiến Huy \\
-    MSHV: \\
-    Vũ Hải Bằng \\
-    MSHV: \\
-    Lớp: Khoa học dữ liệu - K4
-    \end{flushleft}
+        \begin{flushleft} \small
+            \emph{Nhóm học viên thực hiện:}\\
+            Nguyễn Chí Thanh \\
+            MSHV: 21007925 \\ % Your name
+            Nguyễn Đức Thịnh \\
+            MSHV: 21007923 \\
+            Vũ Ngọc Đại \\
+            MSHV: 21007977 \\
+            Vũ Minh Hưng \\
+            MSHV: 21007973 \\
+            Nguyễn Tiến Huy \\
+            MSHV: \\
+            Vũ Hải Bằng \\
+            MSHV: \\
+            Lớp: Khoa học dữ liệu - K4
+        \end{flushleft}
     \end{minipage}
 
 
@@ -188,26 +191,26 @@
 
 \nocite{*}
 
-\begin{baitap}
-    Từ dữ liệu đã cho, hãy đưa ra mô hình dự báo về hình thức làm việc "wrkstat" của một người Mỹ trưởng thành vào năm 2016. 
-    Những yếu tố sử dụng mạng xã hội là "snapchat" và "instagram" có quyết định đến hình thức làm việc của một người hay không? 
-    Đưa ra các giải thích chi tiết về quá trình xây dựng, đánh giá, và biện luận mô hình dự báo.
-\end{baitap}
 
-\begin{loigiai}
+\section{CÁC MÔ HÌNH}
+\subsection{Hồi quy Softmax}
+\subfile{files/multinomial_logistic_regression.tex}
 
-    \begin{enumerate}
-        \item Phân tích dữ liệu
-        
-        \item Cơ sở lý thuyết
-        \begin{itemize}
-            \item Principle Component Analysis
-            
-            \subfile{files/pca.tex}
-        \end{itemize}
-    \end{enumerate}
-\end{loigiai}
+\subsection{Mô hình Hồi quy Softmax theo phương pháp thống kê Bayes}
+\subfile{files/bayesian_multinomial_logistic_regression.tex}
+
+\subsection{Mô hình phân lớp Random forest}
+\subfile{files/random_forest_classifier.tex}
 
 \newpage
+Tham khảo:
+
+\begin{itemize}
+    \item $https://www.sciencedirect.com/topics/mathematics/multinomial-logistic-regression$
+    \item $https://en.wikipedia.org/wiki/Logistic_regression\#Bayesian$
+    \item $https://agustinus.kristia.de/techblog/2017/01/01/mle-vs-map/$
+    \item $https://en.wikipedia.org/wiki/Random_forest$
+\end{itemize}
+
 \printbibliography[title={TÀI LIỆU THAM KHẢO}]
 \end{document}

@@ -1,0 +1,22 @@
+Hồi quy Softmax hay còn gọi là hồi quy logistic đa thức (Multinomial logistic regression) là phương pháp phân lớp tổng quát hóa mô hình hồi quy logistic cho trường hợp biến đầu ra là đa lớp.
+
+
+Phân phối xác suất $P(y|x,w)$ với nhãn $y_i \in {1, 2, \dots, K}$ có dạng như sau:
+
+\begin{equation*}
+    P(y|x,w) = \frac{e^{w^Tx}}{\sum^K_{k=1}e^{w^Tx}}
+\end{equation*}
+
+Trong đó, $w = [w_0, w_1,\dots,w_m]^T$ là các tham số của mô hình, và $w_0$ là tham số \emph{bias}. \emph{m} biến độc lập được viết dưới dạng vector $x = [1,x_1,\dots,x_m]^T$. Mẫu số $\sum^K_1e^{w^Tx}$ chuẩn hóa xác suất trên tất cả các lớp để đảm bảo tổng các xác suất phải bằng $1$.
+Tương tự với \emph{log-likelihood} trong hồi quy logistic, với $n$ mẫu dữ liệu $(x_1, y_1), (x_2, y2),\dots,(x_n, y_n)$, mục tiêu của hồi quy Softmax là cực đại hóa \emph{log-likelihood}
+
+\begin{equation*}
+    W_{MLE} = argmax_{w}logP(y|x,w) = {\sum^n_{i=1}\sum^K_{k=1}I[y_i=k]log\Bigg[\frac{e^{w^Tx_i}}{\sum^K_{j=1}e^{w^Tx_i}}\Bigg]}
+\end{equation*}
+
+Trong đó $I[.]$ là hàm chỉ thị: $I[y_i = k] = 1$ nếu $y_i =k$ là \emph{true} (và ngược lại $I=0$ nếu $y_i \neq k$). Với bài toán tối ưu này, ta có thể sử dụng tối ưu dựa trên gradient để giải.
+
+Cần lưu ý rằng, hồi quy Softmax có thể dư tham số, có nghĩa là mô hình lời giải tối ưu có thể không là duy nhất, cho dù hàm log-likelihood là hàm lồi.
+
+
+

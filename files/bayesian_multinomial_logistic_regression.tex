@@ -1,0 +1,22 @@
+Bayesian Multinomial Logistic Regression biến thể của Hồi quy Softmax trong ngữ cảnh của thống kê Bayes cho bài toán phân loại đa lớp. Ở đây, các phân phối tiên nghiệm được giả định cho các tham số hồi quy, ví dụ như ở dạng phân phối \emph{Gaussian}. Ở Hồi quy Softmax (cũng như Logistic), không tồn tại \emph{conjugate prior}. 
+
+Phân phối xác suất $P(y|x,w)$ với nhãn $y_i \in {1, 2, \dots, K}$ có dạng như sau:
+
+\begin{equation*}
+    P(y|x,w) = \frac{e^{w^Tx}}{\sum^K_{k=1}e^{w^Tx}}
+\end{equation*}
+
+Trong đó, $w = [w_0, w_1,\dots,w_m]^T$ là các tham số của mô hình. Ở đây, các tham số $w$ giả thiết có phân phối tiên nghiệm $P(w_m)$ cho trước theo phân phối chuẩn:
+
+\begin{equation*}
+    w_m \sim \text{Normal}_m(\mu_m,\sigma_m)
+\end{equation*}
+
+Và từ đó, ước lượng MLE sẽ được thay thế bằng ước lượng MAP cho hàm mục tiêu:
+\begin{equation*}
+    W_{MAP} = argmax_{w}logP(y|x,w) = {\sum^n_{i=1}\sum^K_{k=1}I[y_i=k]\Bigg[log\Big(\frac{e^{w^Tx_i}}{\sum^K_{j=1}e^{w^Tx_i}}\Big) + logP(w_m)\Bigg]}
+\end{equation*}
+Khi suy diễn Bayes, với kích thước mẫu lớn, hoặc dữ liệu có nhiều chiều, việc tính toán phân phối hậu nghiệm sẽ rất tốn kém, nên các phương pháp xấp xỉ thường hay được sử dụng như \emph{variational Bayesian} hoặc \emph{expectation propagation}
+
+
+
