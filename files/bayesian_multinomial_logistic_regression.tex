@@ -1,22 +1,85 @@
-Bayesian Multinomial Logistic Regression biến thể của Hồi quy Softmax trong ngữ cảnh của thống kê Bayes cho bài toán phân loại đa lớp. Ở đây, các phân phối tiên nghiệm được giả định cho các tham số hồi quy, ví dụ như ở dạng phân phối \emph{Gaussian}. Ở Hồi quy Softmax (cũng như Logistic), không tồn tại \emph{conjugate prior}. 
+Bayesian Multinomial Logistic Regression (hoặc Bayesian Multinomial Logit Regression) là một phương pháp thống kê được sử dụng để mô hình hóa mối quan hệ giữa một biến phụ thuộc rời rạc với hai hoặc nhiều biến độc lập. 
+Điểm nổi bật của phương pháp này là nó kết hợp cả yếu tố hồi quy logistic (để xác định xác suất xảy ra của các sự kiện rời rạc) và kỹ thuật Bayesian (để xác định phân phối xác suất cho các tham số của mô hình).
 
-Phân phối xác suất $P(y|x,w)$ với nhãn $y_i \in {1, 2, \dots, K}$ có dạng như sau:
+Phương pháp Bayesian cho phép chúng ta làm việc với phân phối xác suất cho các tham số của mô hình thay vì chỉ tập trung vào một bộ giá trị tham số cụ thể như trong phương pháp tối ưu hóa cổ điển. 
+Điều này giúp chúng ta ước tính mức độ không chắc chắn và xác định khoảng tin cậy cho các tham số.
+
+Trong Bayesian Multinomial Logistic Regression, ta lựa chọn một phân phối xác suất tiền định cho các tham số. Đây thường được gọi là phân phối tiên nghiệm. 
+Phân phối tiên nghiệm có thể là một phân phối thông thường như Gaussian (Normal), hoặc nó có thể là một phân phối khác phù hợp với dữ liệu và kiến thức về bài toán đang được giải quyết.
+
+Tất cả các phương pháp hồi quy Bayes đều bắt nguồn từ quy tắc Bayes:
 
 \begin{equation*}
-    P(y|x,w) = \frac{e^{w^Tx}}{\sum^K_{k=1}e^{w^Tx}}
+    p (\boldsymbol{\beta} \vert \mathcal{D}) = \dfrac{p(\boldsymbol{\beta}) p (\mathcal{D} \vert p(\boldsymbol{\beta}))}{p(\mathcal{D})}
 \end{equation*}
 
-Trong đó, $w = [w_0, w_1,\dots,w_m]^T$ là các tham số của mô hình. Ở đây, các tham số $w$ giả thiết có phân phối tiên nghiệm $P(w_m)$ cho trước theo phân phối chuẩn:
+với $p(\boldsymbol{\beta})$ là phân phối tiên nghiệm của tham số mô hình, $p (\mathcal{D} \vert p(\boldsymbol{\beta}))$ là hàm hợp lý.
+
+Ta có thể viết lại công thức trên dưới dạng:
 
 \begin{equation*}
-    w_m \sim \text{Normal}_m(\mu_m,\sigma_m)
+    p (\boldsymbol{\beta} \vert \mathcal{D}) = \dfrac{p(\boldsymbol{\beta}) p (\mathcal{D} \vert p(\boldsymbol{\beta}))}{\int p(\boldsymbol{\beta}) p (\mathcal{D} \vert p(\boldsymbol{\beta})) d \boldsymbol{\beta}}
 \end{equation*}
 
-Và từ đó, ước lượng MLE sẽ được thay thế bằng ước lượng MAP cho hàm mục tiêu:
+Ta nhận thấy $\int p(\boldsymbol{\beta}) p (\mathcal{D} \vert p(\boldsymbol{\beta})) d \boldsymbol{\beta}$ là một hằng số chính là $p(\mathcal{D})$.
+
+Vì vậy:
+
 \begin{equation*}
-    W_{MAP} = argmax_{w}logP(y|x,w) = {\sum^n_{i=1}\sum^K_{k=1}I[y_i=k]\Bigg[log\Big(\frac{e^{w^Tx_i}}{\sum^K_{j=1}e^{w^Tx_i}}\Big) + logP(w_m)\Bigg]}
+    p (\boldsymbol{\beta} \vert \mathcal{D}) \propto p(\boldsymbol{\beta}) p (\mathcal{D} \vert p(\boldsymbol{\beta}))
 \end{equation*}
-Khi suy diễn Bayes, với kích thước mẫu lớn, hoặc dữ liệu có nhiều chiều, việc tính toán phân phối hậu nghiệm sẽ rất tốn kém, nên các phương pháp xấp xỉ thường hay được sử dụng như \emph{variational Bayesian} hoặc \emph{expectation propagation}
 
+Ta giả sử ta đang huấn luyện một mô hình Multinomial Logistic Regression.
+Với từng $j \in 1, \dots, C$, đặt $\boldsymbol{\beta}_j \in \mathbb{R}^d$ là vector tham số, ta mô hình hóa xác suất một quan sát thứ $\bold{x}_i$ mà nhãn đúng $y_i$ rơi vào một trong $C$ lớp khác nhau với:
 
+\begin{equation*}
+    \pi_{ij} = \pi_j (\bold{x}_i) = \dfrac{\exp (\bold{x}_i^T \boldsymbol{\beta}_j)}{\sum_{k=1}^C \exp (\bold{x}_k^T \boldsymbol{\beta}_k)}
+\end{equation*}
+
+với từng vector $\bold{x}_i \in \mathbb{R}^d$ là giá trị quan sát của $d$ biến giải thích tương ứng với nhãn $y_i$.
+Từ đây, cách tiếp cận Bayes bao gồm tiên nghiệm của $\boldsymbol{\beta}_j$ gọi là $p(\boldsymbol{\beta}_j)$
+
+Để tính hàm hợp lý (likelihood), khi biết tập dữ liệu $\mathcal{D} = \lbrace (\bold{x}_i, y_i) \rbrace_{i=1}^N$ ta sử dụng công thức:
+
+\begin{equation*}
+    p(\mathcal{D} \vert \boldsymbol{\beta}_j) = \prod_{i=1}^{N} \Bigg( \dfrac{\exp(\bold{x}_i^T \boldsymbol{\beta}_j) }{\sum_{k=1}^C \exp(\bold{x}_i^T \boldsymbol{\beta}_k)} \Bigg)^{y_{ij}}
+\end{equation*}
+
+với: 
+
+\begin{equation*}
+    y_{ij} = \begin{cases}
+        1 \text{ nếu } j \text{ là nhãn đúng của quan sát thứ } i \\
+        0 \text{ nếu ngược lại}
+    \end{cases}
+\end{equation*}
+
+Như vậy ta thu được:
+
+\begin{equation*}
+    p(\boldsymbol{\beta}_j \vert \mathcal{D}) \propto p(\boldsymbol{\beta}_j) \Bigg \lbrack \prod_{i=1}^{N} \Bigg( \dfrac{\exp(\bold{x}_i^T \boldsymbol{\beta}_j) }{\sum_{k=1}^C \exp(\bold{x}_i^T \boldsymbol{\beta}_k)} \Bigg)^{y_{ij}} \Bigg \rbrack
+\end{equation*}
+
+Để ước lượng phân phối hậu nghiệm của các vector tham số $\boldsymbol{\beta}_j, j=1, \dots, C$, ta sử dụng các phương pháp Monte Carlo.
+Ví dụ, phương pháp lấy mẫu Gibbs sẽ lấy mẫu trực tiếp từ một phân phối có điều kiện đã biết.
+Phương pháp Metropolis-Hastings là một phương pháp khá tổng quát để tạo ra mẫu từ một phân phối xác suất khó xác định.
+Đây là một phương pháp lấy mẫu theo chuỗi Markov, trong đó mỗi bước lấy mẫu dựa trên mẫu trước đó và một phân phối chuyển gọi là "proposal distribution".
+
+Thuật toán lấy mẫu Metropolis - Hastings:
+
+\begin{algorithm}[h!]
+    \DontPrintSemicolon
+    \KwIn{$p(\bold{x})$ là phân phối mục tiêu và $q(\bold{x}^{\prime} \vert \bold{x})$ là phân phối đề xuất}
+    Khởi tại $\bold{x}^0$\;
+    \Repeat{Tạo ra đủ số mẫu $\lbrace \bold{x}^i \rbrace$}{
+        Tạo ra một số ngẫu nhiên $u \sim \mathcal{U} (0, 1)$\;
+        Tạo ra mẫu kiểm tra $\bold{x}^{\ast} \sim q(\bold{x}^{\ast} \vert \bold{x}^i)$\;
+        \If{$u < P(\bold{x}^i, \bold{x}^{\ast}) = \min \Bigg \lbrack 1, \dfrac{p(\bold{x}^{\ast})q(\bold{x}^i \vert \bold{x}^{\ast})}{p(\bold{x}^i)q(\bold{x}^{\ast} \vert \bold{x}^i)} \Bigg\rbrack$} {
+            $\bold{x}^{i+1} \gets \bold{x}^{\ast}$\;
+        } \Else {
+            $\bold{x}^{i+1} \gets \bold{x}^i$\;
+        }
+    }
+    \caption{Thuật toán lấy mẫu Metropolis-Hastings}
+\end{algorithm}
 

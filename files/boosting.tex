@@ -1,0 +1,31 @@
+Boosting là một kỹ thuật ensemble có mục tiêu tạo ra một bộ phân lớp mạnh từ một số các bộ phân lớp yếu hơn. 
+AdaBoost là thuật toán boosting được phát triển cho phân lớp nhị phân và là thuật toán đầu tiên thực sự thành công. 
+Tìm hiểu AdaBoost là một cách hiệu quả để hiểu được boosting. Các phương pháp boosting hiện đại được xây dựng trên thuật toán này.
+
+Kỹ thuật này được thực hiện thông qua việc xây dựng một mô hình từ dữ liệu huấn luyện, sau đó các mô hình tiếp theo được tạo, cố gắng sửa các lỗi từ mô hình đầu tiên. 
+Các mô hình được thêm vào cho đến khi tập huấn luyện được dự đoán hoàn hảo hoặc số lượng mô hình đạt ngưỡng cực đại.
+
+AdaBoost được sử dụng với các cây quyết định có độ sâu nhỏ. 
+Sau khi cây đầu tiên được tạo, hiệu suất của cây trên mỗi mẫu huấn luyện được sử dụng làm thông tin để quyết định cây tiếp theo sẽ tập trung vào mẫu huấn luyện nào. 
+Dữ liệu huấn luyện khó dự đoán sẽ được đánh trọng số lớn hơn so với các trường hợp khác.
+
+Các mô hình được tạo lần lượt, hiệu suất của mô hình trước sẽ ảnh hưởng đến cách mô hình sau được xây dựng. 
+Sau khi tất cả các cây (mô hình) được xây dựng, dự đoán được thực hiện trên dữ liệu mới. 
+Lần này, mỗi cây được được đánh trọng số tùy thuộc vào độ chính xác của nó trên dữ liệu huấn luyện.
+
+Ta có sơ đồ mã giả của thuật toán AdaBoost:
+
+\begin{algorithm}[h!]
+    \DontPrintSemicolon
+    \KwIn{Tập dữ liệu $\mathcal{D} = \lbrace (\bold{x}_i, y_i) \rbrace_{i=1}^N, \bold{x}_i \in \bold{X},  y_i \in \lbrace -1, \rbrace$, $T$ là số mô hình nhỏ}
+    Khởi tại $w_1(\bold{x}_i) = \dfrac{1}{N}$\;
+    \For{$t \gets 1$ \KwSty{to} $T$}{
+        Huấn luyện mô hình yếu sử dụng phân phối trọng số $w_t$\;
+        Thu được mô hình yếu $h_t: \bold{X} \rightarrow \lbrace -1, -1 \rbrace$ với sai số $\epsilon_t \gets \sum_{i: h_t(\bold{x}_i) \neq y_i} w_t (\bold{x}_i)$\;
+        $\alpha_t \gets \dfrac{1}{2} \log \Big( \dfrac{1 - \epsilon_t}{\epsilon_t} \Big)$\;
+        $w_{t+1} (\bold{x}_i) \gets \dfrac{w_t(\bold{x}_i)}{Z_t} = \begin{cases} e^{-\alpha_t} \text{ nếu } \bold{x}_i \text{ được phân loại đúng} \\ e^{\alpha_t} \text{ nếu } \bold{x}_i \text{ không được phân loại đúng}\end{cases}$\;
+        $Z_t \gets \sum_{i=1}^N w_{t+1} (\bold{x}_i)$\;
+    }
+    Mô hình tổng hợp $H(\bold{x}) \gets \mathrm{sign}(\sum_{t=1}^T) \alpha_t h_t(\bold{x})$\;
+    \caption{Thuật toán AdaBoost}
+\end{algorithm}

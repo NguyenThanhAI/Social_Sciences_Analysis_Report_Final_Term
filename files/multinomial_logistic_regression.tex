@@ -20,7 +20,7 @@ Trong đó, $P(y=i|\textbf{x};\textbf{W})$ là xác suất để một điểm d
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=1\textwidth]{figures/softmax_nn.png} % độ rộng ảnh bằng 0.6 độ rộng tối đa của một dòng
+    \includegraphics[width=0.8\textwidth]{figures/softmax_nn.png} % độ rộng ảnh bằng 0.6 độ rộng tối đa của một dòng
     \caption{Mô hình hồi quy Softmax dưới dạng mạng nơ ron} % caption của ảnh
     \label{fig:1} % label của ảnh dùng để reference ảnh. Trong bài viết có chỗ nào cần nói "tại hình 1" thì viết "tại hình \ref{fig:1}"
 \end{figure}
@@ -32,24 +32,24 @@ Trong đó, $P(y=i|\textbf{x};\textbf{W})$ là xác suất để một điểm d
 Hàm mất mát được sử dụng cho mô hình hồi quy Softmax là \emph{Cross Entropy}.
 Cross entropy giữa hai phân phối $p$ và $q$ được viết như sau:
 \begin{equation*}
-    \textbf{H}(\textbf{p},\textbf{q}) = - \sum^C_{i=1}p_ilogq_i
+    \textbf{H}(\textbf{p},\textbf{q}) = - \sum^C_{i=1}p_i\log q_i
 \end{equation*}
 Với hồi quy Softmax, trong trường hợp có $C$ lớp, mất mát giữa đầu ra dự đoán và đầu ra thực sự của dữ liệu $\textbf{x}_i$ được tính như sau:
 \begin{equation*}
-    \textbf{J}(\textbf{W};\textbf{x}_i;\textbf{y}_i) = - \sum^C_{j=1}y_{ij}log(a_{ij})
+    \textbf{J}(\textbf{W};\textbf{x}_i;\textbf{y}_i) = - \sum^C_{j=1}y_{ij}\log(a_{ij})
 \end{equation*}
 
 Với $y_{ij}$ và $a_{ij}$ lần lượt là phần tử thứ $j$ của véc tơ $\textbf{y}_i$ và $\textbf{a}_i$.
 
 Kết hợp tất cả các cặp dữ liệu $\textbf{x}_i, \textbf{y}_i, i = 1,2,\dots,N$, ta sẽ có hàm mất mát của Hồi quy Softmax:
 \begin{equation*}
-    \textbf{J}(\textbf{W};\textbf{X},\textbf{Y}) = - \sum^N_{i=1}\sum^C_{j=1}y_{ij}log(a_{ij}) = - \sum^N_{i=1}\sum^C_{j=1}y_{ij}log\Big(\frac{\text{exp}(\textbf{w}^T_j\textbf{x}_i)}{\sum^C_{k=1}\text{exp}(\textbf{w}^T_k\textbf{x}_i)}\Big)
+    \textbf{J}(\textbf{W};\textbf{X},\textbf{Y}) = - \sum^N_{i=1}\sum^C_{j=1}y_{ij}\log(a_{ij}) = - \sum^N_{i=1}\sum^C_{j=1}y_{ij}\log\Big(\frac{\text{exp}(\textbf{w}^T_j\textbf{x}_i)}{\sum^C_{k=1}\text{exp}(\textbf{w}^T_k\textbf{x}_i)}\Big)
 \end{equation*}
 
 Việc tối ưu hàm mất mát sẽ sử dụng phương pháp tối ưu theo gradient, ví dụ ở đây ta sử dụng Stochastic Gradient Descent (SGD).
 Với mỗi cặp dữ liệu $(\textbf(x)_i, \textbf(y)_i)$ ta có:
 \begin{equation} \label{eq:1}
-    \textbf{J}_i(\textbf{W}) \stackrel{\bigtriangleup}{=} \textbf{J}(\textbf{W};\textbf{x}_i,\textbf{y}_i) = - \sum^C_{j=1}y_{ij}log\Big(\frac{\text{exp}(\textbf{w}^T_j\textbf{x}_i)}{\sum^C_{k=1}\text{exp}(\textbf{w}^T_k\textbf{x}_i)}\Big) = - \sum^C_{j=1}y_{ji}\textbf{w}^T_j\textbf{x}_i + log\Big(\sum^C_{k=1}\text{exp}(\textbf{w}^T_k\textbf{x}_i)\Big)
+    \textbf{J}_i(\textbf{W}) \stackrel{\bigtriangleup}{=} \textbf{J}(\textbf{W};\textbf{x}_i,\textbf{y}_i) = - \sum^C_{j=1}y_{ij}\log\Big(\frac{\text{exp}(\textbf{w}^T_j\textbf{x}_i)}{\sum^C_{k=1}\text{exp}(\textbf{w}^T_k\textbf{x}_i)}\Big) = - \sum^C_{j=1}y_{ji}\textbf{w}^T_j\textbf{x}_i + \log\Big(\sum^C_{k=1}\text{exp}(\textbf{w}^T_k\textbf{x}_i)\Big)
 \end{equation}
 
 Tiếp theo ta sử dụng công thức:

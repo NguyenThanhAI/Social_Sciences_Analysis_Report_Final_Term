@@ -15,12 +15,11 @@ Cây quyết định là phương pháp phổ biến được sử dụng cho c�
 Cây có số bậc càng cao thì càng có khả năng học được những khuôn mẫu bất quy tắc từ dữ liệu huấn luyện, hay nói cách khác, chúng \emph{overfit} đữ liệu huấn luyện. Random forest cho bài toán phân loại là phương pháp lấy biểu quyết của nhiều cây quyết định, huấn luyện theo những hướng khách nhau trên cùng một tập huấn luyện, với mục tiêu giảm \emph{variance},đồng nghĩa với đó là tăng một chút \emph{bias} và mất mát một lượng nhỏ năng lực diễn giải (\emph{interpretability}), nhưng đổi lại sẽ giúp tăng cường năng lực của mô hình cuối.
 \subsubsection{Bagging:} Thuật toán huấn luyện cho Random forest sử dụng kỹ thuật \emph{boostrap aggregating}, hay còn gọi là \emph{bagging}. Với một tập huấn luyện cho trước $X = x_1,\dots,x_n$, và biến phản hồi $Y=y_1,\dots,y_n$, bagging lặp lại việc lựa chọn một mẫu ngẫu nhiên thay cho tập huấn luyện và huấn luyện các Cây cho các mẫu dữ liệu này:
       \begin{algorithm}[h!]
-          \DontPrintSemicolon
-          Với $b = 1,\dots,B:$
-          \begin{itemize}
-              \item 1. Lấy $n$ mẫu từ dữ liệu $X, Y$; gọi là $X_b, Y_b$
-              \item 2. Huấn luyện một cây phân loại trên $X_b, Y_b$
-          \end{itemize}
+            \DontPrintSemicolon
+            \For{$b \gets 1$ \KwSty{to} $B$}{
+                Lấy $n$ mẫu từ dữ liệu $X, Y$; gọi là $X_b, Y_b$\;
+                Huấn luyện một cây phân loại trên $X_b, Y_b$\;
+            }
           \caption{Thuật toán Bagging}
           \label{alg:Bagging}
       \end{algorithm}
