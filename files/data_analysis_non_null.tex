@@ -348,3 +348,194 @@ weighted avg       0.99      1.00      0.99       660
     Hình \ref{fig:Non_null_Bias_Importance_Logistic_original_features} thể hiện độ lớn của các bias tương ứng với từng nhãn giả.
     Kết quả thể hiện tương đối tương đồng với trường hợp vector đầu vào là vector được phân tích thành phần chính sử dụng thuật toán PCA từ vector gốc ban đầu.
 \end{enumerate}
+
+\subsubsection{Random Forest}
+
+\begin{enumerate}[label=(\alph*)]
+    \item Vector thu được từ phân tích thành phần chính sử dụng thuật toán PCA 
+    
+    Ta có bảng kết quả huấn luyện mô hình:
+
+    \begin{python}
+        precision    recall  f1-score   support
+
+          -1       0.00      0.00      0.00         4
+           0       0.99      1.00      1.00       345
+           1       0.98      1.00      0.99       272
+           2       0.00      0.00      0.00         2
+           3       0.95      1.00      0.97        36
+           4       0.00      0.00      0.00         1
+
+    accuracy                           0.99       660
+   macro avg       0.49      0.50      0.49       660
+weighted avg       0.98      0.99      0.98       660
+
+    \end{python}
+
+    và ma trận nhầm lẫn:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/Non_null_confusion_matrix_Random_Forest_PCA_features.png}
+        \caption{Ma trận nhầm lẫn của mô hình Random Forest với vector đầu vào là vector thu được từ phân tích thành phần chính sử dụng thuật toán PCA}
+        \label{fig:Non_null_confusion_matrix_Random_Forest_PCA_features}
+    \end{figure}
+
+    Ta nhận thấy kết quả phân loại của mô hình vẫn khá tốt chỉ kém mô hình Multinomial Logistic Regression một chút.
+    Lý do là vì mỗi một cây học trên một phần dữ liệu và số cây con chưa đủ nhiều làm cho phương sai vẫn khá lớn.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/Non_null_Feature_Importance_Random_Forest_PCA_features.png}
+        \caption{Trọng số của các đặc trưng cho mô hình Random Forest(mô hình đầu vào là vector thu được từ phân tích thành phần chính sử dụng thuật toán PCA)}
+        \label{fig:Non_null_Feature_Importance_Random_Forest_PCA_features}
+    \end{figure}
+
+    Trên hình \ref{fig:Non_null_Feature_Importance_Random_Forest_PCA_features} đặc trưng ảnh hưởng nhiều nhất đến mô hình là emailtotal.
+    Tuy nhiên việc phân tích sử dụng nhân ma trận như ở mô hình Multinomial Logistic Regression là không chính xác về lý thuyết.
+    Nên kết quả về trọng số của đặc trưng ở trường hợp này chỉ mang tính tham khảo.
+
+    \item Vector đầu vào là vector gốc ban đầu
+    
+    Ta có bảng kết quả huấn luyện mô hình:
+
+    \begin{python}
+        precision    recall  f1-score   support
+
+          -1       0.00      0.00      0.00         4
+           0       0.96      1.00      0.98       345
+           1       0.99      1.00      0.99       272
+           2       0.00      0.00      0.00         2
+           3       0.96      0.67      0.79        36
+           4       0.00      0.00      0.00         1
+
+    accuracy                           0.97       660
+   macro avg       0.48      0.44      0.46       660
+weighted avg       0.96      0.97      0.96       660
+    \end{python}
+
+    và ma trận nhầm lẫn:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/Non_null_confusion_matrix_Random_Forest_original_features.png}
+        \caption{Ma trận nhầm lẫn của mô hình Random Forest với vector đầu vào là vector gốc ban đầu}
+        \label{fig:Non_null_confusion_matrix_Random_Forest_original_features}
+    \end{figure}
+
+    Kết quả của mô hình với vector đầu vào là vector gốc ban đầu chỉ kém một chút với mô hình với đầu vào là vector được thực hiện PCA.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/Non_null_Feature_Importance_Random_Forest_original_features.png}
+        \caption{Trọng số của các đặc trưng cho mô hình Random Forest(mô hình đầu vào là vector gốc ban đầu)}
+        \label{fig:Non_null_Feature_Importance_Random_Forest_original_features}
+    \end{figure}
+
+    Hình \ref{fig:Non_null_Feature_Importance_Random_Forest_original_features} cho thấy hai đặc trưng instagrm\_Unknown và snapchat\_Unknown được sử dụng nhiều nhất để phân loại các quan sát theo các nhãn giả.
+    Cũng tương tự như trong trường hợp với mô hình Multinomial Logistic Regression, lý do là vì tần suất của các giá trị snapchat\_Unknown và instagrm\_Unknown khá cao trong tập dữ liệu.
+
+\end{enumerate}
+
+\subsubsection{Mô hình AdaBoost}
+
+\begin{enumerate}[label=(\alph*)]
+    \item Vector thu được từ phân tích thành phần chính sử dụng thuật toán PCA 
+    
+    Ta có bảng kết quả huấn luyện mô hình:
+
+    \begin{python}
+        precision    recall  f1-score   support
+
+        -1       0.75      0.75      0.75         4
+         0       1.00      1.00      1.00       345
+         1       1.00      1.00      1.00       272
+         2       1.00      1.00      1.00         2
+         3       1.00      1.00      1.00        36
+         4       1.00      1.00      1.00         1
+
+  accuracy                           1.00       660
+ macro avg       0.96      0.96      0.96       660
+weighted avg       1.00      1.00      1.00       660
+    \end{python}
+
+    và ma trận nhầm lẫn:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/Non_null_confusion_matrix_AdaBoost_PCA_features.png}
+        \caption{ Ma trận nhầm lẫn của mô hình AdaBoost với vector đầu vào là vector thu được từ
+        phân tích thành phần chính sử dụng thuật toán PCA}
+        \label{fig:Non_null_confusion_matrix_AdaBoost_PCA_features}
+    \end{figure}
+
+    Kết quả phân loại của mô hình vô cùng tốt, hầu hết các nhãn giả đều có độ chính xác và độ hồi tưởng bằng 1 trừ nhãn ngoại lai.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/Non_null_Feature_Importance_AdaBoost_PCA_features.png}
+        \caption{Trọng số của các đặc trưng cho mô hình AdaBoost(mô hình đầu vào là vector thu
+        được từ phân tích thành phần chính sử dụng thuật toán PCA)}
+        \label{fig:Non_null_Feature_Importance_AdaBoost_PCA_features}
+    \end{figure}
+
+    Từ hình \ref{fig:Non_null_Feature_Importance_AdaBoost_PCA_features} đặc trưng ảnh hưởng nhiều nhất đến mô hình là emailtotal cũng như trường hợp của mô hình Random Forest.
+
+    \item Vector đầu vào là vector gốc ban đầu
+    
+    Ta có bảng kết quả huấn luyện mô hình:
+
+    \begin{python}
+        precision    recall  f1-score   support
+
+          -1       1.00      0.50      0.67         4
+           0       1.00      1.00      1.00       345
+           1       1.00      1.00      1.00       272
+           2       1.00      1.00      1.00         2
+           3       0.97      1.00      0.99        36
+           4       1.00      1.00      1.00         1
+
+    accuracy                           1.00       660
+   macro avg       0.99      0.92      0.94       660
+weighted avg       1.00      1.00      1.00       660
+    \end{python}
+
+    và ma trận nhầm lẫn:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/Non_null_confusion_matrix_AdaBoost_original_features.png}
+        \caption{Trọng số của các đặc trưng cho mô hình AdaBoost(mô hình đầu vào là vector gốc ban đầu)}
+        \label{fig:Non_null_confusion_matrix_AdaBoost_original_features}
+    \end{figure}
+
+    Từ hình \ref{fig:Non_null_confusion_matrix_AdaBoost_original_features} hai đặc trưng instagrm\_Unknown và snapchat\_Unknown được sử dụng nhiều
+    nhất để phân loại các quan sát theo các nhãn giả. Ta nhận thấy các đặc trưng có tần suất xuất hiện nhiều sẽ hay được dùng để phân loại các quan sát theo các nhãn giả.
+\end{enumerate}
+
+\subsubsection{Chỉ số AIC, BIC của các mô hình}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        & PCA & Vector gốc ban đầu \\
+        \hline
+        Multinomial Logistic Regression & 50.894, 64.371 & 121.166, 314.332 \\
+        \hline
+        Random Forest & 184.425, 197.902 & 332.221, 525.388 \\
+        \hline
+        AdaBoost & 33.150, 46.626 & 129.378, 322.544 \\
+        \hline
+    \end{tabular}
+    \caption{Kết quả AIC, BIC của các mô hình (tại mỗi ô chỉ số đầu tiên là chỉ số AIC và chỉ số thứ hai là chỉ số BIC của mô hình tương ứng kiểu đầu vào)}
+    \label{tab:Non_null_AIC_BIC_Model_pseudo_clustering_label}
+\end{table}
+
+Từ bảng \ref{tab:Non_null_AIC_BIC_Model_pseudo_clustering_label} ta nhận thấy với cùng mô hình với đầu vào là vector được phân tích thành phần chính từ thuật toán PCA có chỉ số AIC, BIC nhỏ hơn so với cùng mô hình có đầu vào và vector gốc ban đầu.
+Lý do là vì mô hình với đầu vào là vector được phân tích thành phần chính từ thuật toán PCA sử dụng ít biến giải thích hơn nhưng thông tin mà đầu vào vẫn giữ được nhiều so với vector gốc ban đầu.
+Mô hình Multinomial Logistic Regression và AdaBoost cho kết quả tốt hơn mô hình Random Forest.
+Lý do là vì, đối với mô hình Multinomial Logistic Regression, dữ liệu đã phân tách tốt, mô hình chỉ cần học một siêu phẳng để phân tách dữ liệu.
+Còn đối với AdaBoost, các mô hình nhỏ quá trình học phụ thuộc vào nhau, nhưng quan sát bị sai ở mô hình trước được đánh trọng số cao khiến cho tổng hợp các mô hình nhỏ học được khả năng phân loại dữ liệu rất tốt.
+Mô hình Random Forest chưa thật sự tốt bằng hai mô hình trên vì mỗi cây con học trên một phần dữ liệu nhỏ chưa phản ảnh hết toàn bộ dữ liệu, số lượng cây con chưa lớn làm cho phương sai của dự đoán lớn.
+
