@@ -251,7 +251,7 @@ weighted avg       0.99      0.99      0.99       660
 
     \end{python}
 
-    và ma trận nhầm lẫn
+    và ma trận nhầm lẫn:
 
     \begin{figure}[H]
         \centering
@@ -275,11 +275,11 @@ weighted avg       0.99      0.99      0.99       660
     \begin{figure}[H]
         \centering
         \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/Non_null_Feature_Importance_Logistic_PCA_features.png}
-        \caption{Biểu đồ cột sắp xếp độ lớn (trị tuyệt đối) tham số của các đặc trưng ứng với từng nhãn giả}
+        \caption{Biểu đồ cột sắp xếp độ lớn giảm dần (trị tuyệt đối) tham số của các đặc trưng ứng với từng nhãn giả}
         \label{fig:Non_null_Feature_Importance_Logistic_PCA_features}
     \end{figure}
 
-    Ta có biểu đồ cột sắp xếp độ lớn (trị tuyệt đối) tham số của các đặc trưng ứng với từng nhãn giả thể hiện ở hình \ref{fig:Non_null_Feature_Importance_Logistic_PCA_features}.
+    Ta có biểu đồ cột sắp xếp độ lớn giảm dần (trị tuyệt đối) tham số của các đặc trưng ứng với từng nhãn giả thể hiện ở hình \ref{fig:Non_null_Feature_Importance_Logistic_PCA_features}.
     Ta nhận thấy các đặc trưng tương ứng với snapchat\_Unknown hoặc instagrm\_Unknown có trọng số khá lớn.
     Lý do có thể là vì tần suất của các giá trị snapchat\_Unknown và instagrm\_Unknown khá cao (hình \ref{fig:Non_null_frequency_of_unique_values_of_columns})
 
@@ -290,5 +290,61 @@ weighted avg       0.99      0.99      0.99       660
         \label{fig:Non_null_Bias_Importance_Logistic_PCA_features}
     \end{figure}
 
-    Hình \ref{fig:Non_null_Bias_Importance_Logistic_PCA_features} thể hiện độ lớn của các bias tương ứng với từng nhãn giả,
+    Hình \ref{fig:Non_null_Bias_Importance_Logistic_PCA_features} thể hiện độ lớn của các bias tương ứng với từng nhãn giả.
+
+    \item Vector đầu vào là vector gốc ban đầu
+    
+    Ta có bảng kết quả huấn luyện mô hình:
+
+    \begin{python}
+        precision    recall  f1-score   support
+
+        -1       1.00      0.50      0.67         4
+         0       1.00      1.00      1.00       345
+         1       1.00      1.00      1.00       272
+         2       1.00      1.00      1.00         2
+         3       0.97      1.00      0.99        36
+         4       0.00      0.00      0.00         1
+
+  accuracy                           1.00       660
+ macro avg       0.83      0.75      0.77       660
+weighted avg       0.99      1.00      0.99       660
+
+
+    \end{python}
+
+    và ma trận nhầm lẫn:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/Non_null_confusion_matrix_Logistic_original_features.png}
+        \caption{Ma trận nhầm lẫn của mô hình Multinomial Logistic Regression khi vector đầu vào là vector gốc ban đầu}
+        \label{fig:Non_null_confusion_matrix_Logistic_original_features}
+    \end{figure}
+
+    Ta nhận thấy kết quả phân loại của mô hình vẫn vô cùng tốt.
+    Các nhóm (cụm) có số quan sát lớn đều có độ chính xác (precision) và độ hồi tưởng (recall) đều bằng 1.
+
+    Ta sẽ phân tích ngược trở lại trọng số của các tham số tương ứng với các đặc trưng của vector ban đầu từ các tham số ứng với các đặc trưng của các thành phần chính:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/Non_null_Feature_Importance_Logistic_original_features.png}
+        \caption{Biểu đồ cột sắp xếp độ lớn giảm dần (trị tuyệt đối) tham số của các đặc trưng ứng với từng nhãn giả (mô hình với vector đầu vào là vector gốc ban đầu)}
+        \label{fig:Non_null_Feature_Importance_Logistic_original_features}
+    \end{figure}
+
+    Ta có biểu đồ cột sắp xếp độ lớn giảm dần (trị tuyệt đối) tham số của các đặc trưng ứng với từng nhãn giả thể hiện ở hình \ref{fig:Non_null_Feature_Importance_Logistic_original_features}.
+    Ta nhận thấy các đặc trưng tương ứng với harass5\_Unknown, snapchat\_Unknown hoặc instagrm\_Unknown có trọng số tương ứng với nhãn giả 0 hoặc 1 (có nhiều quan sát thuộc hai nhãn này) khá lớn.
+    Lý do có thể là vì tần suất của các giá trị harass5\_Unknown, snapchat\_Unknown và instagrm\_Unknown khá cao (hình \ref{fig:Non_null_frequency_of_unique_values_of_columns})
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/Non_null_Bias_Importance_Logistic_original_features.png}
+        \caption{Biểu đồ cột thể hiện độ lớn của các bias tương ứng với từng nhãn giả (mô hình với vector đầu vào là vector gốc ban đầu)}
+        \label{fig:Non_null_Bias_Importance_Logistic_original_features}
+    \end{figure}
+
+    Hình \ref{fig:Non_null_Bias_Importance_Logistic_original_features} thể hiện độ lớn của các bias tương ứng với từng nhãn giả.
+    Kết quả thể hiện tương đối tương đồng với trường hợp vector đầu vào là vector được phân tích thành phần chính sử dụng thuật toán PCA từ vector gốc ban đầu.
 \end{enumerate}
