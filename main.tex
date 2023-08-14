@@ -38,6 +38,13 @@
 
 \usepackage{subfiles} % Best loaded last in the preamble
 
+\usepackage{makecell}
+
+\renewcommand\theadalign{bc}
+\renewcommand\theadfont{\bfseries}
+\renewcommand\theadgape{\Gape[4pt]}
+\renewcommand\cellgape{\Gape[4pt]}
+
 
 \bibliography{ref.bib}
 
@@ -158,7 +165,7 @@
             Vũ Minh Hưng \\
             MSHV: 21007973 \\
             Nguyễn Tiến Huy \\
-            MSHV: \\
+            MSHV: 21007974\\
             Vũ Hải Bằng \\
             MSHV: \\
             Lớp: Khoa học dữ liệu - K4
@@ -222,6 +229,10 @@
 
     %     \end{itemize}
     % \end{enumerate}
+
+    \section{Thống kê mô tả và phân tích tập dữ liệu}
+    
+    \subfile{files/huy-dai-bang.tex}
 
     \section{Cơ sở lý thuyết}
 
