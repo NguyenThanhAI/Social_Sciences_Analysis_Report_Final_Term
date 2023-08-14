@@ -218,8 +218,8 @@ Ta sử dụng thuật toán DBSCAN.
 
 
 Hình \ref{fig:Non_null_scatterplot_couples_of_PCA_features_vs_pseudo_clustering_labels} thể hiện Scatter plot của các điểm dữ liệu theo các thành phần chính, màu sắc thể hiện các cụm mà các quan sát được gán vào.
-Có ba nhóm chính có số lượng quan sát lớn là nhóm 0, 1 và nhóm 2.
-Ngoài ra còn nhóm 3 và nhóm 4 có số lượng các quan sát ít hơn nhiều 3 nhóm trên.
+Có ba nhóm chính có số lượng quan sát lớn là nhóm 0, 1.
+Ngoài ra còn nhóm 2, 3 và nhóm 4 có số lượng các quan sát ít hơn nhiều 2 nhóm trên.
 Nhóm -1 được xem là các điểm ngoại lai.
 Ta sẽ xem các nhóm là kết quả của quá trình phân cụm là các nhãn giả và thử một số mô hình phân loại và đánh giá hiệu quả của các mô hình trên tương ứng với các nhãn giả này.
 
@@ -230,3 +230,65 @@ Ta phân chia theo chiến lược stratify sampling để bảo toàn tỷ lệ
 
 
 \subsubsection{Multinomial Logistic Regression}
+
+\begin{enumerate}[label=(\alph*)]
+    \item Vector thu được từ phân tích thành phần chính sử dụng thuật toán PCA 
+    Ta có bảng kết quả huấn luyện mô hình:
+
+    \begin{python}
+        precision    recall  f1-score   support
+
+        -1       0.40      0.50      0.44         4
+         0       1.00      1.00      1.00       345
+         1       1.00      1.00      1.00       272
+         2       0.00      0.00      0.00         2
+         3       0.97      1.00      0.99        36
+         4       0.00      0.00      0.00         1
+
+  accuracy                           0.99       660
+ macro avg       0.56      0.58      0.57       660
+weighted avg       0.99      0.99      0.99       660
+
+    \end{python}
+
+    và ma trận nhầm lẫn
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/Non_null_confusion_matrix_Logistic_PCA_features.png}
+        \caption{Ma trận nhầm lẫn của mô hình Multinomial Logistic Regression khi vector đầu vào được phân tích thành phần chính}
+        \label{fig:Non_null_confusion_matrix_Logistic_PCA_features}
+    \end{figure}
+
+    Ta nhận thấy kết quả phân loại của mô hình vô cùng tốt.
+    Các nhóm (cụm) có số quan sát lớn đều có độ chính xác (precision) và độ hồi tưởng (recall) đều bằng 1.
+
+    Ta sẽ phân tích ngược trở lại trọng số của các tham số tương ứng với các đặc trưng của vector ban đầu từ các tham số ứng với các đặc trưng của các thành phần chính bằng công thức:
+
+    \begin{equation*}
+        \bold{W} =   \bold{W}_{PCA} \times \bold{U}^T
+    \end{equation*}
+
+    với $\bold{W} \in \mathbb{R}^{\mathrm{c} \times d}$, $c$ là số class, $d$ là số chiều của vector ban đầu.
+    $\bold{U}$ là ma trận chuyển cơ sở của thuật toán PCA từ không gian $d$ chiều sang không gian $r$ chiều thành phần chính đầu tiên.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/Non_null_Feature_Importance_Logistic_PCA_features.png}
+        \caption{Biểu đồ cột sắp xếp độ lớn (trị tuyệt đối) tham số của các đặc trưng ứng với từng nhãn giả}
+        \label{fig:Non_null_Feature_Importance_Logistic_PCA_features}
+    \end{figure}
+
+    Ta có biểu đồ cột sắp xếp độ lớn (trị tuyệt đối) tham số của các đặc trưng ứng với từng nhãn giả thể hiện ở hình \ref{fig:Non_null_Feature_Importance_Logistic_PCA_features}.
+    Ta nhận thấy các đặc trưng tương ứng với snapchat\_Unknown hoặc instagrm\_Unknown có trọng số khá lớn.
+    Lý do có thể là vì tần suất của các giá trị snapchat\_Unknown và instagrm\_Unknown khá cao (hình \ref{fig:Non_null_frequency_of_unique_values_of_columns})
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/Non_null_Bias_Importance_Logistic_PCA_features.png}
+        \caption{Biểu đồ cột thể hiện độ lớn của các bias tương ứng với từng nhãn giả}
+        \label{fig:Non_null_Bias_Importance_Logistic_PCA_features}
+    \end{figure}
+
+    Hình \ref{fig:Non_null_Bias_Importance_Logistic_PCA_features} thể hiện độ lớn của các bias tương ứng với từng nhãn giả,
+\end{enumerate}
