@@ -35,9 +35,9 @@ Dưới đây là mô tả chi tiết về ý nghĩa các cột trong tập dữ
     \label{fig:null_percentage_columns}
 \end{figure}
 
-Hình \ref{fig:null_percentage_columns} thể hiện số lượng giá trị null trong từng biến. Từ hình \ref{fig:null_percentage_columns}, ta rút ra được nhận xét rằng hầu hết các biến của tập dữ liệu đều có các giá trị rỗng.
+Hình \ref{fig:null_percentage_columns} thể hiện số lượng giá trị null trong từng biến. Từ hình \ref{fig:null_percentage_columns}, ta rút ra được nhận xét rằng hầu hết các biến của tập dữ liệu đều có các giá trị null.
 
-Trong đó, 3 biến "advfront", "snapchat" và "instagram" có nhiều giá trị rỗng nhất và 2 biến "educ" và "wrkstat" có ít giá trị rỗng nhất, chi tiết trong Bảng \ref{tab:null-percentage} dưới.
+Trong đó, 3 biến "advfront", "snapchat" và "instagram" có nhiều giá trị null nhất và 2 biến "educ" và "wrkstat" có ít giá trị null nhất, chi tiết trong Bảng \ref{tab:null-percentage} dưới.
 
 \begin{table}[h!]
     \centering
@@ -46,17 +46,22 @@ Trong đó, 3 biến "advfront", "snapchat" và "instagram" có nhiều giá tr�
             \hline
             & harass5 & emailmin & emailhr & educ & polviews & advfront & snapchat & instagram & wrkstat \\
             \hline
-            Giá trị rỗng & 1398 & 1218 & 1218 & 9 & 111 & 1482 & 1495 & 1495 & 3 \\
+            Giá trị null & 1398 & 1218 & 1218 & 9 & 111 & 1482 & 1495 & 1495 & 3 \\
             \hline
             Giá trị khác rỗng & 1469 & 1649 & 1649 & 2858 & 2756 & 1385 & 1372 & 1372 & 2864 \\
             \hline
-            Tỷ lệ giá trị rỗng (\%) & 48.7\% & 42.4\% & 42.4\% & 0.3\% & 3.8\% & 51.7\% & 52.1\% & 52.1\% & 0.1\% \\
+            Tỷ lệ giá trị null (\%) & 48.7\% & 42.4\% & 42.4\% & 0.3\% & 3.8\% & 51.7\% & 52.1\% & 52.1\% & 0.1\% \\
             \hline
         \end{tabular}
     }
-    \caption{Tỷ lệ giá trị rỗng trong từng cột}
+    \caption{Tỷ lệ giá trị null trong từng cột}
     \label{tab:null-percentage}
 \end{table}
+
+Ta xử lý hai cột "emailmin" và "emailhr" bằng cách tạo ra một cột mới "emailtotal" bằng công thức 60 x "emailhr" + "emailmin".
+Đối với các cột là dạng biến phân loại (categorical), các giá trị null ta sẽ tạo ra một giá trị mới là "Unknown".
+Riêng đối với cột "emailtotal" là biến định lượng, số lượng các giá trị null quá nhiều ta sẽ phải tách ra làm hai tập dữ liệu riêng.
+Một tập dữ liệu chỉ bao gồm các quan sát có cột "emailtotal" không phải giá trị null và một tập dữ liệu chỉ bao gồm quan sát có cột "emailtotal" là giá trị null.
 
 \textbf{Phân tích mô tả tập dữ liệu về Tình trạng làm việc dựa trên yếu tố sử dụng mạng xã hội là "snapchat" và "instagram".}:
 
