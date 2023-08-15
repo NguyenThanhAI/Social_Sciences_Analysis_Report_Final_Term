@@ -58,11 +58,11 @@
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
 %
-%\numberwithin{equation}{section}
+\numberwithin{equation}{section}
 %\numberwithin{algorithm}{section}
-%\numberwithin{figure}{section}
+\numberwithin{figure}{section}
 %
-%\setlength{\parindent}{0.5cm}
+\setlength{\parindent}{0.5cm}
 %
 %\setcounter{secnumdepth}{3} % Cho phép subsubsection trong report
 %\setcounter{tocdepth}{3} % Chèn subsubsection vào bảng mục lục
@@ -229,6 +229,12 @@
 
     %     \end{itemize}
     % \end{enumerate}
+
+    \cleardoublepage
+    \pagenumbering{gobble}
+    \tableofcontents
+    \newpage
+    \listoffigures
 
     \section{Thống kê mô tả và phân tích tập dữ liệu}
     
