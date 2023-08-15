@@ -32,8 +32,8 @@ Working parttime       0.00      0.00      0.00        55
         \label{fig:With_null_models_confusion_matrix_Logistic_PCA_features}
     \end{figure}
 
-    Ta nhận thấy kết quả phân loại không tốt, trừ nhóm làm việc toàn thời gian có độ hồi tưởng là 0.62 và nhóm đã nghỉ hưu có độ hồi tưởng là 0.41 và độ chính xác là 0.53 thì tất cả độ chính xác và độ hồi tưởng của các lớp khác đều bằng 0.
-    Nhìn vào ma trận nhầm lẫn ở hình \ref{fig:With_null_models_confusion_matrix_Logistic_PCA_features} ta nhận thấy mô hình dự đoán tất cả các quan sát vào lớp làm việc toàn thời gian.
+    Ta nhận thấy kết quả phân loại không tốt, trừ nhóm làm việc toàn thời gian có độ hồi tưởng là 0.87 và nhóm đã nghỉ hưu có độ hồi tưởng là 0.42 và độ chính xác lần lượt là 0.39 và 0.48 thì tất cả độ chính xác và độ hồi tưởng của các lớp khác đều bằng 0.
+    Nhìn vào ma trận nhầm lẫn ở hình \ref{fig:With_null_models_confusion_matrix_Logistic_PCA_features} ta nhận thấy mô hình dự đoán tất cả các quan sát vào lớp làm việc toàn thời gian và lớp đã nghỉ hưu.
     Lý do là vì từ phần phân tích dữ liệu, ta thấy phân phối của các thành phần chính tương ứng với các nhóm trong cột wrkstat gần như cùng hình dạng, trộn lẫn vào nhau.
     Mô hình sẽ khó phân biệt được quan sát nào thuộc lớp nào.
     Trong quá trình học, mô hình biết số quan sát thuộc lớp làm việc toàn thời gian và lớp đã nghỉ hưu có số lượng nhiều nhất.
@@ -93,7 +93,7 @@ Working parttime       0.00      0.00      0.00        55
     \end{figure}
 
     Ta nhận thấy kết quả gần như không khác nhiều so với trường hợp mô hình đầu vào là vector đã được phân tích thành phần chính sử dụng thuật toán PCA.
-    Độ chính xác và độ hồi tưởng của lớp làm việc toàn thời gian cao hơn chút và độ hồi tưởng của lớp đã nghỉ hưu cao hơn một chút so với trường hợp trên.
+    Độ chính xác của lớp làm việc toàn thời gian cao hơn chút nhưng độ hồi tưởng giảm đi một chút và độ hồi tưởng của lớp đã nghỉ hưu cao hơn một chút so với trường hợp trên.
     Lý do là vì khi sử dụng vector gốc ban đầu, mô hình có nhiều thông tin hơn để phân loại các lớp.
     Tuy vậy, phân phối dữ liệu vẫn chưa đủ tách biệt giữa các lớp khác nhau chưa đủ để mô hình có thể học được cách phân loại tốt các lớp trong cột wrkstat.
 
