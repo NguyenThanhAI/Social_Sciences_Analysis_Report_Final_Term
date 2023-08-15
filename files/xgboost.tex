@@ -1,0 +1,50 @@
+XGBoost (Extreme Gradient Boosting) là thuật toán \emph{gradient boosting} được thiết kế cho xử lý phân tán, nó rất linh hoạt, tiện dụng và hiệu năng cao. 
+Thường mô hình XGBoost sẽ cho độ chính xác cao hơn so với Cây quyết định, nhưng đổi lại, nó đánh mất đi một số diễn giải nội tại của Cây quyết định. 
+Ví dụ như việc đi theo một hướng quyết định của một Cây quyết định thì đơn giản và dễ hiểu, nhưng việc sử dụng hướng quyết định từ hàng trăm hoặc hàng nghìn cây thì khó hơn nhiều. Để đạt được cả hiệu năng và khả năng diễn giải, một số kỹ thuật nén mô hình được áp dụng để biến đổi mô hình XGBoost thành một Cây quyết định mới mà xấp xỉ các quyết định của XGBoost.
+
+\subsubsection{Các đặc tính của XGBoost:}
+Mô hình XGBoost đem lại một số các đặc tính khác biệt so với các thuật toán \emph{gradient boosting} khác như sau:
+\begin{itemize}
+    \item Phạt khéo léo các cây.
+    \item Suy giảm một phần các nút lá.
+    \item Sử dụng Newton Boosting thay cho Gradient Descent
+    \item Mở rộng ngẫu nhiên hóa tham số
+    \item Tối ưu hóa tính toán trên các hệ thống đơn hoặc phân tán, và tính toán bên bộ nhớ ngoài.
+    \item Chọn lựa đặc trưng một cách tự động.
+    \item Điều chỉnh phác thảo phân vị có trọng số về mặt lý thuyết cho tính toán hiệu quả.
+    \item Song song hóa boosting cấu trúc cây với biểu diễn thưa.
+    \item Cấu trúc khối có lưu \emph{cache} hiệu quả cho việc huấn luyện Cây quyết định.
+\end{itemize}
+
+\subsubsection{Thuật toán}
+XGBoost sử dụng Newton-Raphson thay vì Gradient Descent trong không gian hàm, vì vậy một xấp xỉ Taylor bậc hai được sử dụng ở hàm mất mát để kết nối tới phương pháp Newton-Raphson.
+\begin{algorithm}[h!]
+    \DontPrintSemicolon
+    \KwIn{Tập huấn luyện $\{(x_i,y_i)\}^N_{i=1}$, một hàm mất mát khả vi $\bold{L}(y,\bold{F}(x))$, một số các mô hình yếu $\bold{M}$ với một learning rate $\alpha$}
+    Khởi tạo mô hình với hằng số:
+    \begin{equation*}
+        \bold{\hat{f}}_{(0)}(x) = argmin_{\theta}\sum^N_{i=1}\bold{L}(y_i,\bold{\theta})
+    \end{equation*}\;
+    Với $m = 1$ tới $\bold{M}$:\break
+    1. Tính toán \emph{gradient} và \emph{hessians}:
+    \begin{equation*}
+        \bold{\hat{g}}_m(x_i) = \Bigg[\frac{\bold{\partial}\bold{L}(y_i,\bold{f}(x_i))}{\bold{\partial^2}\bold{L}(y_i,\bold{f}(x_i)}\Bigg]_{f(x)=\hat{f}_{m-1}(x)}
+    \end{equation*}
+    \begin{equation*}
+        \bold{\hat{h}}_m(x_i) = \Bigg[\frac{\bold{\partial^2}\bold{L}(y_i,\bold{f}(x_i))}{\bold{\partial}\bold{f}(x_i)^2}\Bigg]_{f(x)=\hat{f}_{m-1}(x)}
+    \end{equation*}
+    2. Fit một hàm học cơ bản (hoặc một hàm học yếu ví dụ 1 Cây) sử dụng dữ liệu huấn luyện $\Big\{x_i, -\frac{\hat{g}_m(x_i)}{\hat{h}_m(x_i)}\Big\}^N_{i=1}$, bằng việc giải bài toán tối ưu sau:
+    \begin{equation*}
+        \hat{\phi}_m = argmin_{\phi\in\bold{\Phi}}\sum^N_{i=1}\frac{1}{2}\bold{\hat{h}}_m(x_i)\Bigg[\phi(x_i)-\frac{\bold{\hat{g}}_m(x_i)}{\hat{\bold{h}}_m(x_i)}\Bigg]^2
+    \end{equation*}
+    \begin{equation*}
+        \bold{\hat{f}}_{(m)}(x) = \alpha\hat{\phi}_m(x)
+    \end{equation*}
+    3. Cập nhật mô hình:
+    \begin{equation*}
+        \bold{\hat{f}}_{(m)}(x) = \bold{\hat{f}}_{(m-1)}(x) + \bold{\hat{f}}_m(x)
+    \end{equation*}\;
+    Output: $\hat{\bold{f}}(x) = \bold{\hat{f}}_{(M)}(x) = \sum^M_{m=0}\bold{\hat{f}}_m(x)$\;
+    \caption{Thuật toán XGBoost}
+    \label{alg:xgboost}
+\end{algorithm}
