@@ -1,0 +1,91 @@
+\subsubsection{Mô hình cho tập dữ liệu chỉ bao gồm các quan sát có cột "emailtotal" chỉ là giá trị null}
+
+Ta có phân phối tiên nghiệm của mô hình:
+
+\begin{python}
+Intercept ~ Normal(mu: 0.0, sigma: 9.8161)
+harass5_0 ~ Normal(mu: 0.0, sigma: 7.1248)
+harass5_1 ~ Normal(mu: 0.0, sigma: 10.3041)
+harass5_2 ~ Normal(mu: 0.0, sigma: 5.2372)
+harass5_3 ~ Normal(mu: 0.0, sigma: 7.1078)
+snapchat_0 ~ Normal(mu: 0.0, sigma: 5.0513)
+snapchat_1 ~ Normal(mu: 0.0, sigma: 5.0256)
+snapchat_2 ~ Normal(mu: 0.0, sigma: 7.6524)
+instagrm_0 ~ Normal(mu: 0.0, sigma: 5.0513)
+instagrm_1 ~ Normal(mu: 0.0, sigma: 5.0912)
+instagrm_2 ~ Normal(mu: 0.0, sigma: 6.7305)
+polviews_0 ~ Normal(mu: 0.0, sigma: 12.4422)
+polviews_1 ~ Normal(mu: 0.0, sigma: 11.4262)
+polviews_2 ~ Normal(mu: 0.0, sigma: 6.9162)
+polviews_3 ~ Normal(mu: 0.0, sigma: 7.5222)
+polviews_4 ~ Normal(mu: 0.0, sigma: 5.2073)
+polviews_5 ~ Normal(mu: 0.0, sigma: 8.0731)
+polviews_6 ~ Normal(mu: 0.0, sigma: 7.8898)
+polviews_7 ~ Normal(mu: 0.0, sigma: 12.002)
+advfront_0 ~ Normal(mu: 0.0, sigma: 7.23)
+advfront_1 ~ Normal(mu: 0.0, sigma: 43.5534)
+advfront_2 ~ Normal(mu: 0.0, sigma: 15.5804)
+advfront_3 ~ Normal(mu: 0.0, sigma: 23.3774)
+advfront_4 ~ Normal(mu: 0.0, sigma: 9.7823)
+advfront_5 ~ Normal(mu: 0.0, sigma: 15.349)
+educ_0 ~ Normal(mu: 0.0, sigma: 61.5428)
+educ_1 ~ Normal(mu: 0.0, sigma: 50.2703)
+educ_2 ~ Normal(mu: 0.0, sigma: 86.9986)
+educ_3 ~ Normal(mu: 0.0, sigma: 50.2703)
+educ_4 ~ Normal(mu: 0.0, sigma: 86.9986)
+educ_5 ~ Normal(mu: 0.0, sigma: 50.2703)
+educ_6 ~ Normal(mu: 0.0, sigma: 19.1437)
+educ_7 ~ Normal(mu: 0.0, sigma: 24.2497)
+educ_8 ~ Normal(mu: 0.0, sigma: 15.128)
+educ_9 ~ Normal(mu: 0.0, sigma: 14.7143)
+educ_10 ~ Normal(mu: 0.0, sigma: 13.3552)
+educ_11 ~ Normal(mu: 0.0, sigma: 12.1074)
+educ_12 ~ Normal(mu: 0.0, sigma: 5.4059)
+educ_13 ~ Normal(mu: 0.0, sigma: 9.5279)
+educ_14 ~ Normal(mu: 0.0, sigma: 7.6524)
+educ_15 ~ Normal(mu: 0.0, sigma: 13.0728)
+educ_16 ~ Normal(mu: 0.0, sigma: 7.3608)
+educ_17 ~ Normal(mu: 0.0, sigma: 14.3341)
+educ_18 ~ Normal(mu: 0.0, sigma: 11.0883)
+educ_19 ~ Normal(mu: 0.0, sigma: 18.3078)
+educ_20 ~ Normal(mu: 0.0, sigma: 12.5606)
+\end{python}
+
+Do số lượng các tham số tương ứng rất lớn (khoảng hơn 300 tham số), nên ta sẽ thể hiện các tham số quan trọng tương ứng với các họ đặc trưng snapchat và instagrm.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/Thanh/Models/Bayesian_Multi_Logit/Bayesian_email_with_null_snapchat_weights_plot.png}
+    \caption{Hình vẽ biểu diễn phân phối hậu nghiệm các tham số tương ứng với các đặc trưng của instagrm với các lớp khác nhau của cột wrkstat}
+    \label{fig:Bayesian_email_with_null_snapchat_weights_plot}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/Thanh/Models/Bayesian_Multi_Logit/Bayesian_email_with_null_instagrm_weights_plot.png}
+    \caption{Hình vẽ biểu diễn phân phối hậu nghiệm các tham số tương ứng với các đặc trưng của instagrm với các lớp khác nhau của cột wrkstat}
+    \label{fig:Bayesian_email_with_null_instagrm_weights_plot}
+\end{figure}
+
+Các hình trên biểu diễn các phân phối hậu nghiệm của các tham số tương ứng với các họ đặc trưng snapchat và họ đặc trưng instagrm.
+Ta nhận thấy các phân phối hậu nghiệm có dạng xấp xỉ phân phối chuẩn.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figures/Thanh/Models/Bayesian_Multi_Logit/Bayesian_email_with_null_snapchat_weights.png}
+    \caption{Các phân vị mức và trung bình, độ lệch chuẩn của phân phối hậu nghiệm của các tham số tương ứng với họ đặc trưng snapchat}
+    \label{fig:Bayesian_email_with_null_snapchat_weights}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figures/Thanh/Models/Bayesian_Multi_Logit/Bayesian_email_with_null_instagrm_weights.png}
+    \caption{Các phân vị mức và trung bình, độ lệch chuẩn của phân phối hậu nghiệm của các tham số tương ứng với họ đặc trưng instagram}
+    \label{fig:Bayesian_email_with_null_instagrm_weights}
+\end{figure}
+
+Ta nhận thấy độ lệch tiêu chuẩn của phân phối hậu nghiệm của các tham số tương ứng với họ đặc trưng snapchat và họ đặc trưng instagrm khá lớn trong khi trung bình lại khá nhỏ.
+Nếu ta xét bài toán kiểm định trung bình của các tham số tương ứng với họ đặc trưng snapchat và họ đặc trưng instagrm có lớn hơn 0 hay không thì tiêu chuẩn thống kê khá nhỏ.
+Điều này làm ta cũng có kết luận sơ bộ những yếu tố sử dụng mạng xã hội snapchat hoặc instagrm không ảnh hưởng đến hình thức làm việc của một người.
