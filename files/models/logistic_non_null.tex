@@ -107,16 +107,16 @@ Working parttime       0.19      0.06      0.09        80
     Nhiều quan sát thuộc lớp làm việc toàn thời gian bị phân loại thành lớp Retired cho ta thấy trong quá trình huấn luyện mô hình đã có chút sự nhận biết sự tách biệt giữa hai lớp này.
     Tuy nhiên do sự phân biệt chưa đáng kể làm cho mô hình bị phân loại sai khá nhiều dẫn đến sự đánh đổi về độ hồi tưởng của lớp có số quan sát nhiều nhất là lớp làm việc toàn thời gian với độ hồi tưởng của các lớp khác.
 
-    Ta sẽ phân tích ngược trở lại trọng số của các tham số tương ứng với các đặc trưng của vector ban đầu từ các tham số ứng với các đặc trưng của các thành phần chính:
+    Ta sẽ phân tích ngược trở lại trọng số của các tham số tương ứng với các đặc trưng của vector ban đầu từ các tham số ứng với các đặc trưng:
 
     \begin{figure}[H]
         \centering
-        \includegraphics[width=0.6\textwidth]{figures/Thanh/Models/Logistic/Non_null_models_Feature_Importance_Logistic_PCA_features.png}
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Models/Logistic/Non_null_models_Feature_Importance_Logistic_original_features.png}
         \caption{Biểu đồ cột sắp xếp độ lớn giảm dần (trị tuyệt đối) tham số của các đặc trưng ứng với từng nhãn giả (mô hình với vector đầu vào là vector gốc ban đầu)}
-        \label{fig:Non_null_models_Feature_Importance_Logistic_PCA_features}
+        \label{fig:Non_null_models_Feature_Importance_Logistic_original_features}
     \end{figure}
 
-    Ta có biểu đồ cột sắp xếp độ lớn giảm dần (trị tuyệt đối) tham số của các đặc trưng ứng với từng nhãn giả thể hiện ở hình \ref{fig:Non_null_models_Feature_Importance_Logistic_PCA_features}.
+    Ta có biểu đồ cột sắp xếp độ lớn giảm dần (trị tuyệt đối) tham số của các đặc trưng ứng với từng nhãn giả thể hiện ở hình \ref{fig:Non_null_models_Feature_Importance_Logistic_original_features}.
     Ta nhận thấy các đặc trưng có trọng số lớn tương ứng với từng lớp là educ\_15, snapchat\_Yes, harass5\_Does\_not\_apply đa số là các đặc trưng ít xuất hiện trong tập dữ liệu.
 
     \begin{figure}[H]
@@ -126,6 +126,6 @@ Working parttime       0.19      0.06      0.09        80
         \label{fig:Non_null_models_Bias_Importance_Logistic_original_features.png}
     \end{figure}
 
-    Hình \ref{fig:Non_null_models_Bias_Importance_Logistic_original_features.png} thể hiện độ lớn của các bias tương ứng với từng nhãn giả.
+    Hình \ref{fig:Non_null_models_Bias_Importance_Logistic_original_features.png} thể hiện độ lớn của các bias tương ứng với từng nhãn.
     Bias tương ứng với nhãn làm việc toàn thời gian có giá trị lớn nhất lý do là vì mô hình có xu hướng phân loại đa số các quan sát vào nhãn làm việc toàn thời gian
 \end{enumerate}
