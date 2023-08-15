@@ -71,7 +71,10 @@ Như đã phân tích ở các phần trên, trường dữ liệu email\_total 
 \textbf{Xét nhóm quan sát A}
 
 Ta có:
-
+$$
+    P(wrkstat = x | \beta_1, \beta_2,..., \beta_{19}) = \\ logit(\beta_0 + \beta_1 * email\_total + ... + \beta_{18} * social\_media\_NO
+    + \beta_{19} * social\_media\_YES)
+$$
 
 Với $x \in\{$'Retired', 'Working fulltime', 'Working parttime', 'Unempl, laid off', 'Temp not working', 'Keeping house', 'School', 'Other'\}
 
@@ -106,7 +109,10 @@ Từ kết quả trên, với mức ý nghĩa $5 \%$ ta có thể bác bỏ $H_{
 \textbf{Xét nhóm quan sát B}
 
 Ta có:
-
+$$
+    P(wrkstat = x | \beta_1, \beta_2,..., \beta_{18}) = logit(\beta_0 + ... + \beta_{17} * social\_media\_NO \\
+    + \beta_{18} * social\_media\_YES)
+$$
 
 Với $x \in\{$'Retired', 'Working fulltime', 'Working parttime', 'Unempl, laid off', 'Temp not working', 'Keeping house', 'School', 'Other'\}
 
