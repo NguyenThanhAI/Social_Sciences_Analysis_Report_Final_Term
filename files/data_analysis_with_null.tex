@@ -216,3 +216,113 @@ Ta sẽ sử dụng hai loại biểu diễn là các vector ban đầu và các
 Ta sẽ thử ba mô hình phân loại là mô hình Multinomial Logistic Regression, Random Forest và AdaBoost.
 Ta chia tập dữ liệu với tỷ lệ 0.6 cho tập train và 0.4 cho tập test.
 Ta phân chia theo chiến lược stratify sampling để bảo toàn tỷ lệ của các nhãn trong cả tập train và tập test.
+
+\subsubsection{Multinomial Logistic Regression}
+
+\begin{enumerate}[label=(\alph*)]
+    \item Đầu vào là vector thu được từ phân tích thành phần chính sử dụng thuật toán PCA 
+    
+    Ta có bảng kết quả huấn luyện mô hình:
+
+    \begin{python}
+        precision    recall  f1-score   support
+
+          -1       0.00      0.00      0.00         4
+           0       1.00      1.00      1.00       211
+           1       1.00      1.00      1.00       102
+           2       1.00      1.00      1.00        99
+           3       0.94      1.00      0.97        68
+
+    accuracy                           0.99       484
+   macro avg       0.79      0.80      0.79       484
+weighted avg       0.98      0.99      0.99       484
+    \end{python}
+
+    và ma trận nhầm lẫn:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/With_null_confusion_matrix_Logistic_PCA_features.png}
+        \caption{Ma trận nhầm lẫn của mô hình Multinomial Logistic Regression khi vector đầu vào được phân tích thành phần chính}
+        \label{fig:With_null_confusion_matrix_Logistic_PCA_features}
+    \end{figure}
+
+    Kết quả phân loại của mô hình rất tốt.
+    Trừ nhãn giả -1, tất cả các nhãn giả khác đều có độ hồi tưởng là 1.
+
+    Ta sẽ phân tích ngược trở lại trọng số của các tham số tương ứng với các đặc trưng của vector ban đầu từ các tham số ứng với các đặc trưng của các thành phần chính.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/With_null_Feature_Importance_Logistic_PCA_features.png}
+        \caption{Biểu đồ cột sắp xếp độ lớn giảm dần (trị tuyệt đối) tham số của các đặc trưng ứng với từng nhãn giả}
+        \label{fig:With_null_Feature_Importance_Logistic_PCA_features}
+    \end{figure}
+
+    Ta có biểu đồ cột sắp xếp độ lớn giảm dần (trị tuyệt đối) tham số của các đặc trưng ứng với từng nhãn giả thể hiện ở hình \ref{fig:With_null_Feature_Importance_Logistic_PCA_features}.
+    Ta nhận thấy các đặc trưng tương ứng với harass5\_No, instagrm\_No, harass5\_Unknown, snapchat\_No có trọng số khá lớn.
+    Ta nhận thấy đặc điểm chung của các đặc trưng này là tần suất của các giá trị tương ứng với các đặc trưng trên lớn (hình \ref{fig:With_null_frequency_of_unique_values_of_columns})
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/With_null_Bias_Importance_Logistic_PCA_features.png}
+        \caption{Biểu đồ cột thể hiện độ lớn của các bias tương ứng với từng nhãn giả}
+        \label{fig:With_null_Bias_Importance_Logistic_PCA_features}
+    \end{figure}
+
+    Hình \ref{fig:With_null_Bias_Importance_Logistic_PCA_features} thể hiện độ lớn của các bias tương ứng với từng nhãn giả.
+
+    \item Vector đầu vào là vector gốc ban đầu
+    
+    Ta có bảng kết quả huấn luyện mô hình:
+
+    \begin{python}
+        precision    recall  f1-score   support
+
+        -1       0.00      0.00      0.00         4
+         0       1.00      1.00      1.00       211
+         1       1.00      1.00      1.00       102
+         2       1.00      1.00      1.00        99
+         3       0.94      1.00      0.97        68
+
+  accuracy                           0.99       484
+ macro avg       0.79      0.80      0.79       484
+weighted avg       0.98      0.99      0.99       484
+    \end{python}
+
+    và ma trận nhầm lẫn:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/With_null_confusion_matrix_Logistic_original_features.png}
+        \caption{Ma trận nhầm lẫn của mô hình Multinomial Logistic Regression khi vector đầu vào là vector gốc ban đầu}
+        \label{fig:With_null_confusion_matrix_Logistic_original_features}
+    \end{figure}
+
+    Ta nhận thấy kết quả phân loại trùng hoàn toàn so với trường hợp đầu vào là vector đã được phân tích thành phần chính sử dụng thuật toán PCA.
+
+    Ta sẽ phân tích ngược trở lại trọng số của các tham số tương ứng với các đặc trưng của vector ban đầu từ các tham số ứng với các đặc trưng của các thành phần chính:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/With_null_Feature_Importance_Logistic_original_features.png}
+        \caption{Biểu đồ cột sắp xếp độ lớn giảm dần (trị tuyệt đối) tham số của các đặc trưng ứng với từng nhãn giả (mô hình với vector đầu vào là vector gốc ban đầu)}
+        \label{fig:With_null_Feature_Importance_Logistic_original_features}
+    \end{figure}
+
+    Ta có biểu đồ cột sắp xếp độ lớn giảm dần (trị tuyệt đối) tham số của các đặc trưng ứng với từng nhãn giả thể hiện ở hình \ref{fig:With_null_Feature_Importance_Logistic_original_features}.
+    Các đặc trưng có trọng số lớn vẫn là các đặc trưng có trọng số lớn ở trường hợp trước khi vector đầu vào là vector được phân tích thành phần chính: harass5\_No, snapchat\_Unknown, instagrm\_Unknown.
+    Lý do có thể là vì tần suất của các giá trị harass5\_No, snapchat\_Unknown, instagrm\_Unknown có tần suất cao trong tập dữ liệu (hình \ref{fig:With_null_frequency_of_unique_values_of_columns}).
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/With_null_Bias_Importance_Logistic_original_features.png}
+        \caption{Biểu đồ cột thể hiện độ lớn của các bias tương ứng với từng nhãn giả (mô hình với vector đầu vào là vector gốc ban đầu)}
+        \label{fig:With_null_Bias_Importance_Logistic_original_features}
+    \end{figure}
+
+    Hình \ref{fig:With_null_Bias_Importance_Logistic_original_features} thể hiện độ lớn của các bias tương ứng với từng nhãn giả.
+    Kết quả thể hiện ngược lại với trường hợp vector đầu vào là vector được phân tích thành phần chính sử dụng thuật toán PCA từ vector gốc ban đầu.
+    Nhãn giả 2 trường hợp đầu vào là vector được phân tích thành phần chính có bias tương đối nhỏ nhưng với trường hợp đầu vào là vector gốc ban đầu thì bias tương đối lớn
+
+\end{enumerate}
