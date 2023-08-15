@@ -410,3 +410,114 @@ weighted avg       0.96      0.97      0.97       484
     Hình \ref{fig:With_null_Feature_Importance_Random_Forest_original_features} cho thấy ba đặc trưng harass5\_No, instagrm\_Unknown và snapchat\_Unknown được sử dụng nhiều nhất để phân loại các quan sát theo các nhãn giả.
     Cũng tương tự như trong trường hợp với mô hình Multinomial Logistic Regression, lý do là vì tần suất của các giá trị harass5\_No, snapchat\_Unknown và instagrm\_Unknown khá cao trong tập dữ liệu.
 \end{enumerate}
+
+\subsubsection{Mô hình AdaBoost}
+
+\begin{enumerate}[label=(\alph*)]
+    \item Đầu vào mô hình là vector thu được từ phân tích thành phần chính sử dụng thuật toán PCA 
+    
+    Ta có bảng kết quả huấn luyện mô hình:
+
+    \begin{python}
+        precision    recall  f1-score   support
+
+          -1       1.00      0.50      0.67         4
+           0       1.00      1.00      1.00       211
+           1       1.00      1.00      1.00       102
+           2       1.00      1.00      1.00        99
+           3       0.97      1.00      0.99        68
+
+    accuracy                           1.00       484
+   macro avg       0.99      0.90      0.93       484
+weighted avg       1.00      1.00      1.00       484
+    \end{python}
+
+    và ma trận nhầm lẫn:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/With_null_confusion_matrix_AdaBoost_PCA_features.png}
+        \caption{ Ma trận nhầm lẫn của mô hình AdaBoost với vector đầu vào là vector thu được từ
+        phân tích thành phần chính sử dụng thuật toán PCA}
+        \label{fig:With_null_confusion_matrix_AdaBoost_PCA_features}
+    \end{figure}
+
+    Kết quả phân loại của mô hình rất tốt, hầu hết các nhãn giả đều có độ hồi tưởng bằng 1 trừ nhãn ngoại lai.
+    Độ chính xác chỉ có nhãn giả 3 có độ chính xác là 0.97.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/With_null_Feature_Importance_AdaBoost_PCA_features.png}
+        \caption{Trọng số của các đặc trưng cho mô hình AdaBoost(mô hình đầu vào là vector thu
+        được từ phân tích thành phần chính sử dụng thuật toán PCA)}
+        \label{fig:With_null_Feature_Importance_AdaBoost_PCA_features}
+    \end{figure}
+
+    Từ hình \ref{fig:With_null_Feature_Importance_AdaBoost_PCA_features} đặc trưng ảnh hưởng nhiều nhất đến mô hình là harass5\_No và harass5\_Unknown cũng như trường hợp của mô hình Random Forest.
+
+    \item Vector đầu vào là vector gốc ban đầu
+    
+    Ta có bảng kết quả huấn luyện mô hình:
+
+    \begin{python}
+        precision    recall  f1-score   support
+
+        -1       1.00      0.25      0.40         4
+         0       1.00      1.00      1.00       211
+         1       1.00      1.00      1.00       102
+         2       1.00      1.00      1.00        99
+         3       0.96      1.00      0.98        68
+
+  accuracy                           0.99       484
+ macro avg       0.99      0.85      0.88       484
+weighted avg       0.99      0.99      0.99       484
+    \end{python}
+
+    và ma trận nhầm lẫn:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/With_null_confusion_matrix_AdaBoost_original_features.png}
+        \caption{Trọng số của các đặc trưng cho mô hình AdaBoost(mô hình đầu vào là vector gốc ban đầu)}
+        \label{fig:With_null_confusion_matrix_AdaBoost_original_features}
+    \end{figure}
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/With_null_Feature_Importance_AdaBoost_original_features.png}
+        \caption{Trọng số của các đặc trưng cho mô hình AdaBoost(mô hình đầu vào là vector gốc ban đầu)}
+        \label{fig:With_null_Feature_Importance_AdaBoost_original_features}
+    \end{figure}
+
+    Từ hình \ref{fig:With_null_Feature_Importance_AdaBoost_original_features} hai đặc trưng harass5\_No và instagrm\_No được sử dụng nhiều
+    nhất để phân loại các quan sát theo các nhãn giả. Ta nhận thấy các đặc trưng có tần suất xuất hiện nhiều sẽ hay được dùng để phân loại các quan sát theo các nhãn giả.
+\end{enumerate}
+
+\subsubsection{Chỉ số AIC, BIC của các mô hình}
+
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        & PCA & Vector gốc ban đầu \\
+        \hline
+        Multinomial Logistic Regression & 103.593, 116.139 & 150.013, 338.207 \\
+        \hline
+        Random Forest & 267.995, 280.542 & 493.471, 681.665\\
+        \hline
+        AdaBoost & 104.757, 117.303 & 260.284, 448.478 \\
+        \hline
+    \end{tabular}
+    \caption{Kết quả AIC, BIC của các mô hình (tại mỗi ô chỉ số đầu tiên là chỉ số AIC và chỉ số thứ hai là chỉ số BIC của mô hình tương ứng kiểu đầu vào)}
+    \label{tab:With_null_AIC_BIC_Model_pseudo_clustering_label}
+\end{table}
+
+
+Từ bảng \ref{tab:Non_null_AIC_BIC_Model_pseudo_clustering_label} ta nhận thấy với cùng mô hình với đầu vào là vector được phân tích thành phần chính từ thuật toán PCA có chỉ số AIC, BIC nhỏ hơn so với cùng mô hình có đầu vào và vector gốc ban đầu.
+Lý do là vì mô hình với đầu vào là vector được phân tích thành phần chính từ thuật toán PCA sử dụng ít biến giải thích hơn nhưng thông tin mà đầu vào vẫn giữ được nhiều so với vector gốc ban đầu.
+Mô hình Multinomial Logistic Regression và AdaBoost cho kết quả tốt hơn mô hình Random Forest.
+Lý do là vì, đối với mô hình Multinomial Logistic Regression, dữ liệu đã phân tách tốt, mô hình chỉ cần học một siêu phẳng để phân tách dữ liệu.
+Còn đối với AdaBoost, các mô hình nhỏ quá trình học phụ thuộc vào nhau, nhưng quan sát bị sai ở mô hình trước được đánh trọng số cao khiến cho tổng hợp các mô hình nhỏ học được khả năng phân loại dữ liệu rất tốt.
+Mô hình Random Forest vì mỗi cây con học trên một phần dữ liệu nhỏ chưa phản ảnh hết toàn bộ dữ liệu, khiến cho các cây con có thể dự đoán khác nhau nhiều, làm cho phương sai dự đoán lớn.
+Cho dù các mẫu dự đoán đúng nhưng confident score không cao khiến cho log likelihood lớn.
