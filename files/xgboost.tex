@@ -18,33 +18,33 @@ Mô hình XGBoost đem lại một số các đặc tính khác biệt so với 
 
 \subsubsection{Thuật toán}
 XGBoost sử dụng Newton-Raphson thay vì Gradient Descent trong không gian hàm, vì vậy một xấp xỉ Taylor bậc hai được sử dụng ở hàm mất mát để kết nối tới phương pháp Newton-Raphson.
-\begin{algorithm}[h!]
-    \DontPrintSemicolon
-    \KwIn{Tập huấn luyện $\{(x_i,y_i)\}^N_{i=1}$, một hàm mất mát khả vi $\bold{L}(y,\bold{F}(x))$, một số các mô hình yếu $\bold{M}$ với một learning rate $\alpha$}
-    Khởi tạo mô hình với hằng số:
-    \begin{equation*}
-        \bold{\hat{f}}_{(0)}(x) = argmin_{\theta}\sum^N_{i=1}\bold{L}(y_i,\bold{\theta})
-    \end{equation*}\;
-    Với $m = 1$ tới $\bold{M}$:\break
-    1. Tính toán \emph{gradient} và \emph{hessians}:
-    \begin{equation*}
-        \bold{\hat{g}}_m(x_i) = \Bigg[\frac{\bold{\partial}\bold{L}(y_i,\bold{f}(x_i))}{\bold{\partial^2}\bold{L}(y_i,\bold{f}(x_i)}\Bigg]_{f(x)=\hat{f}_{m-1}(x)}
-    \end{equation*}
-    \begin{equation*}
-        \bold{\hat{h}}_m(x_i) = \Bigg[\frac{\bold{\partial^2}\bold{L}(y_i,\bold{f}(x_i))}{\bold{\partial}\bold{f}(x_i)^2}\Bigg]_{f(x)=\hat{f}_{m-1}(x)}
-    \end{equation*}
-    2. Fit một hàm học cơ bản (hoặc một hàm học yếu ví dụ 1 Cây) sử dụng dữ liệu huấn luyện $\Big\{x_i, -\frac{\hat{g}_m(x_i)}{\hat{h}_m(x_i)}\Big\}^N_{i=1}$, bằng việc giải bài toán tối ưu sau:
-    \begin{equation*}
-        \hat{\phi}_m = argmin_{\phi\in\bold{\Phi}}\sum^N_{i=1}\frac{1}{2}\bold{\hat{h}}_m(x_i)\Bigg[\phi(x_i)-\frac{\bold{\hat{g}}_m(x_i)}{\hat{\bold{h}}_m(x_i)}\Bigg]^2
-    \end{equation*}
-    \begin{equation*}
-        \bold{\hat{f}}_{(m)}(x) = \alpha\hat{\phi}_m(x)
-    \end{equation*}
-    3. Cập nhật mô hình:
-    \begin{equation*}
-        \bold{\hat{f}}_{(m)}(x) = \bold{\hat{f}}_{(m-1)}(x) + \bold{\hat{f}}_m(x)
-    \end{equation*}\;
-    Output: $\hat{\bold{f}}(x) = \bold{\hat{f}}_{(M)}(x) = \sum^M_{m=0}\bold{\hat{f}}_m(x)$\;
-    \caption{Thuật toán XGBoost}
-    \label{alg:xgboost}
-\end{algorithm}
+    \begin{algorithm}[h!]
+        \DontPrintSemicolon
+        \KwIn{Tập huấn luyện $\{(x_i,y_i)\}^N_{i=1}$, một hàm mất mát khả vi $\bold{L}(y,\bold{F}(x))$, một số các mô hình yếu $\bold{M}$ với một learning rate $\alpha$}
+        Khởi tạo mô hình với hằng số:
+        \begin{equation*}
+            \bold{\hat{f}}_{(0)}(x) = \underset{\boldsymbol{\theta}}{\mathrm{argmin}}\sum^N_{i=1}\bold{L}(y_i,\bold{\theta})
+        \end{equation*}\;
+        Với $m = 1$ tới $\bold{M}$:\break
+        1. Tính toán \emph{gradient} và \emph{hessians}:
+        \begin{equation*}
+            \bold{\hat{g}}_m(x_i) = \Bigg[\frac{\bold{\partial}\bold{L}(y_i,\bold{f}(x_i))}{\bold{\partial^2}\bold{L}(y_i,\bold{f}(x_i)}\Bigg]_{f(x)=\hat{f}_{m-1}(x)}
+        \end{equation*}
+        \begin{equation*}
+            \bold{\hat{h}}_m(x_i) = \Bigg[\frac{\bold{\partial^2}\bold{L}(y_i,\bold{f}(x_i))}{\bold{\partial}\bold{f}(x_i)^2}\Bigg]_{f(x)=\hat{f}_{m-1}(x)}
+        \end{equation*}
+        2. Fit một hàm học cơ bản (hoặc một hàm học yếu ví dụ 1 cây) sử dụng dữ liệu huấn luyện $\Big\{x_i, -\frac{\hat{g}_m(x_i)}{\hat{h}_m(x_i)}\Big\}^N_{i=1}$, bằng việc giải bài toán tối ưu sau:
+        \begin{equation*}
+            \hat{\phi}_m = \underset{\phi\in\bold{\Phi}}{\mathrm{argmin}}\sum^N_{i=1}\frac{1}{2}\bold{\hat{h}}_m(x_i)\Bigg[\phi(x_i)-\frac{\bold{\hat{g}}_m(x_i)}{\hat{\bold{h}}_m(x_i)}\Bigg]^2
+        \end{equation*}
+        \begin{equation*}
+            \bold{\hat{f}}_{(m)}(x) = \alpha\hat{\phi}_m(x)
+        \end{equation*}
+        3. Cập nhật mô hình:
+        \begin{equation*}
+            \bold{\hat{f}}_{(m)}(x) = \bold{\hat{f}}_{(m-1)}(x) + \bold{\hat{f}}_m(x)
+        \end{equation*}\;
+        Output: $\hat{\bold{f}}(x) = \bold{\hat{f}}_{(M)}(x) = \sum^M_{m=0}\bold{\hat{f}}_m(x)$\;
+        \caption{Thuật toán XGBoost}
+        \label{alg:xgboost}
+    \end{algorithm}
