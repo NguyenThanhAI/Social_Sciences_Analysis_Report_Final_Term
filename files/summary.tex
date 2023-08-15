@@ -1,0 +1,36 @@
+\newpage
+\begin{center}
+    \section*{KẾT LUẬN}
+\end{center}
+
+Đối với tập đề bài đưa ra, một số công việc ta đã thực hiện được:
+
+\begin{itemize}
+    \item Ta đã thực hiện phân tích tập dữ liệu, ta chia tập dữ liệu thành hai tập dữ liệu nhỏ hơn và khảo sát riêng:
+    
+    \begin{itemize}
+        \item Tập dữ liệu chỉ bao gồm các quan sát có thời gian dành cho email trong một tuần không phải giá trị null
+        \item Tập dữ liệu chỉ bao gồm các quan sát thời gian dành cho email trong một tuần là giá trị null
+    \end{itemize}
+
+    \item Ta đã phân tích tập dữ liệu và phân phối dữ liệu tương ứng với các lớp trong cột hình thức làm việc và các phân phối này gần như không có sự tách biệt.
+    Điều này dẫn đến rất khó xây dựng một mô hình phân loại tốt để phân loại hình thức làm việc của một người.
+    \item Ta xây dựng các mô hình phân loại các quan sát tương ứng với nhãn giả từ quá trình phân cụm.
+    \item Ta xây dựng các mô hình dự đoán hình thức làm việc của một người và so sánh các kết quả thu được:
+    \begin{itemize}
+        \item Multinomial Logistic Regression
+        \item Random Forest
+        \item AdaBoost
+        \item XGBoost
+        \item Multi Layer Perceptron
+        \item Bayesian Multinomial Logistic Regression
+    \end{itemize}
+    \item Bằng mô hình Bayesian Multinomial Logistic Regression, ta kết luận sơ bộ những yếu tố sử dụng mạng xã hội snapchat hoặc instagrm không ảnh hưởng đến hình thức làm việc của một người.
+    \item Bằng các kiểm định thống kê, với mức ý nghĩa 5\%, ta có thể khẳng định tồn tại mối quan hệ giữa việc sử dụng mạng xã hội (Snapchat, Instagram) và tình trạng việc làm của một cá nhân. Ảnh hưởng của việc sử dụng mạng xã hội đối với tình trạng việc làm của một cá nhân có ý nghĩa thống kê trong một số trường hợp cụ thể, đặc biệt là đối với nhóm người đang đi học, đang làm việc fulltime hoặc đã nghỉ hưu.
+\end{itemize}
+
+
+
+
+
+
