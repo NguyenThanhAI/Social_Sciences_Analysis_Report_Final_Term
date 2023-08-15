@@ -326,3 +326,87 @@ weighted avg       0.98      0.99      0.99       484
     Nhãn giả 2 trường hợp đầu vào là vector được phân tích thành phần chính có bias tương đối nhỏ nhưng với trường hợp đầu vào là vector gốc ban đầu thì bias tương đối lớn
 
 \end{enumerate}
+
+\subsubsection{Random Forest}
+
+\begin{enumerate}[label=(\alph*)]
+    \item Đầu vào là vector thu được từ phân tích thành phần chính sử dụng thuật toán PCA 
+    
+    Ta có bảng kết quả huấn luyện mô hình:
+
+    \begin{python}
+        precision    recall  f1-score   support
+
+        -1       0.00      0.00      0.00         4
+         0       0.95      1.00      0.97       211
+         1       1.00      1.00      1.00       102
+         2       1.00      1.00      1.00        99
+         3       0.93      0.84      0.88        68
+
+  accuracy                           0.97       484
+ macro avg       0.78      0.77      0.77       484
+weighted avg       0.96      0.97      0.96       484
+    \end{python}
+
+    và ma trận nhầm lẫn:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/With_null_confusion_matrix_Random_Forest_PCA_features.png}
+        \caption{Ma trận nhầm lẫn của mô hình Random Forest với vector đầu vào là vector thu được từ phân tích thành phần chính sử dụng thuật toán PCA}
+        \label{fig:With_null_confusion_matrix_Random_Forest_PCA_features}
+    \end{figure}
+
+    Ta nhận thấy kết quả phân loại của mô hình vẫn khá tốt chỉ kém mô hình Multinomial Logistic Regression một chút.
+    Lý do là vì mỗi một cây học trên một phần dữ liệu và số cây con chưa đủ nhiều làm cho phương sai vẫn khá lớn.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/With_null_Feature_Importance_Random_Forest_PCA_features.png}
+        \caption{Trọng số của các đặc trưng cho mô hình Random Forest(mô hình đầu vào là vector thu được từ phân tích thành phần chính sử dụng thuật toán PCA)}
+        \label{fig:With_null_Feature_Importance_Random_Forest_PCA_features}
+    \end{figure}
+
+    Trên hình \ref{fig:With_null_Feature_Importance_Random_Forest_PCA_features} đặc trưng ảnh hưởng nhiều nhất đến mô hình là harass5\_No và harass5\_Unknown.
+    Tuy nhiên việc phân tích sử dụng nhân ma trận như ở mô hình Multinomial Logistic Regression là không chính xác về lý thuyết.
+    Nên kết quả về trọng số của đặc trưng ở trường hợp này chỉ mang tính tham khảo.
+
+    \item Vector đầu vào là vector gốc ban đầu
+    
+    Ta có bảng kết quả huấn luyện mô hình:
+
+    \begin{python}
+        precision    recall  f1-score   support
+
+          -1       0.00      0.00      0.00         4
+           0       0.94      1.00      0.97       211
+           1       1.00      1.00      1.00       102
+           2       1.00      1.00      1.00        99
+           3       1.00      0.85      0.92        68
+
+    accuracy                           0.97       484
+   macro avg       0.79      0.77      0.78       484
+weighted avg       0.96      0.97      0.97       484
+    \end{python}
+
+    và ma trận nhầm lẫn:
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/With_null_confusion_matrix_Random_Forest_original_features.png}
+        \caption{Ma trận nhầm lẫn của mô hình Random Forest với vector đầu vào là vector gốc ban đầu}
+        \label{fig:With_null_confusion_matrix_Random_Forest_original_features}
+    \end{figure}
+
+    Kết quả của mô hình với vector đầu vào là vector gốc ban đầu tốt hơn so với mô hình với đầu vào là vector được thực hiện PCA.
+
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/Thanh/Data_Analysis/With_null_Feature_Importance_Random_Forest_original_features.png}
+        \caption{Trọng số của các đặc trưng cho mô hình Random Forest(mô hình đầu vào là vector gốc ban đầu)}
+        \label{fig:With_null_Feature_Importance_Random_Forest_original_features}
+    \end{figure}
+
+    Hình \ref{fig:With_null_Feature_Importance_Random_Forest_original_features} cho thấy ba đặc trưng harass5\_No, instagrm\_Unknown và snapchat\_Unknown được sử dụng nhiều nhất để phân loại các quan sát theo các nhãn giả.
+    Cũng tương tự như trong trường hợp với mô hình Multinomial Logistic Regression, lý do là vì tần suất của các giá trị harass5\_No, snapchat\_Unknown và instagrm\_Unknown khá cao trong tập dữ liệu.
+\end{enumerate}
