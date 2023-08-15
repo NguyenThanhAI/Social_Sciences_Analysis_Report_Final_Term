@@ -1,0 +1,50 @@
+\subsection{Tổng hợp chỉ số AIC, BIC của các mô hình}
+
+\subsection{Chỉ số AIC, BIC của các mô hình cho tập dữ liệu chỉ bao gồm các quan sát có cột "emailtotal" không phải giá trị null}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        & PCA & Vector gốc ban đầu \\
+        \hline
+        Multinomial Logistic Regression & 1914.929, 1932.898 & 2021.798, 2228.441 \\
+        \hline
+        Random Forest & 1860.040, 1878.009 & 1948.737, 2155.380 \\
+        \hline
+        AdaBoost & 2247.728, 2265.697 & 2388.204, 2594.847 \\
+        \hline
+        XGBoost & 2037.531, 2055.500 & 2061.440, 2268.083 \\
+        \hline
+    \end{tabular}
+    \caption{Kết quả AIC, BIC của các mô hình cho tập dữ liệu chỉ bao gồm các quan sát có cột "emailtotal" không phải giá trị null (tại mỗi ô chỉ số đầu tiên là chỉ số AIC và chỉ số thứ hai là chỉ số BIC của mô hình tương ứng kiểu đầu vào)}
+    \label{tab:Non_null_AIC_BIC_Models}
+\end{table}
+
+Từ bảng \ref{tab:Non_null_AIC_BIC_Models}, ta nhận thấy hai mô hình Multinomial Logistic Regression và Random Forest có chỉ số AIC, BIC nhỏ nhất.
+Nhưng khi tổng hòa các từ chỉ số AIC, BIC và kết quả phân loại mô hình, ma trận nhầm lẫn ta chọn mô hình XGBoost với đầu vào là vector gốc ban đầu
+
+
+\subsection{Chỉ số AIC, BIC của các mô hình cho tập dữ liệu chỉ bao gồm các quan sát có cột "emailtotal" chỉ là giá trị null}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|c|c|}
+        \hline
+        & PCA & Vector gốc ban đầu \\
+        \hline
+        Multinomial Logistic Regression & 1544.431, 1556.977 & 1616.564, 1804.758 \\
+        \hline
+        Random Forest & 1514.993, 1527.539 & 1574.709, 1762.903 \\
+        \hline
+        AdaBoost & 1897.195, 1909.742 & 1952.385, 2140.579 \\
+        \hline
+        XGBoost & 1666.849, 1679.396 & 1630.720, 1818.914 \\
+        \hline
+    \end{tabular}
+    \caption{Kết quả AIC, BIC của các mô hình cho tập dữ liệu chỉ bao gồm các quan sát có cột "emailtotal" chỉ là giá trị null (tại mỗi ô chỉ số đầu tiên là chỉ số AIC và chỉ số thứ hai là chỉ số BIC của mô hình tương ứng kiểu đầu vào)}
+    \label{tab:With_null_AIC_BIC_Models}
+\end{table}
+
+Từ bảng \ref{tab:With_null_AIC_BIC_Models}, ta nhận thấy hai mô hình Multinomial Logistic Regression và Random Forest có chỉ số AIC, BIC nhỏ nhất.
+Nhưng khi tổng hòa các từ chỉ số AIC, BIC và kết quả phân loại mô hình, ma trận nhầm lẫn ở trên ta vẫn chọn mô hình XGBoost với đầu vào là vector gốc ban đầu
