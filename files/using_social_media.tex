@@ -1,7 +1,7 @@
 \subsection{Xây dựng giả thuyết}
 Thông thường, để có thể xây dựng được các giả thuyết nghiên cứu một cách chặt chẽ, ta cần tìm hiểu tổng quan lí thuyết liên quan và từ đó tổng hợp, đề xuất các giả thuyết dựa trên nền tảng lí thuyết đã có. Tuy nhiên, trong phạm vi bài tập này, vì hạn chế trong kiến thức chuyên ngành trong lĩnh vực quản trị lao động, nhóm thực hiện phân tích tỉ lệ sử dụng mạng xã hội (Snapchat, Instagram) theo từng nhóm tình trạng việc làm để có thể đưa ra giả thuyết ban đầu về mối quan hệ giữa việc sử dụng mạng xã hội và tình trạng việc làm của một cá nhân. Hình \ref{fig:using_social_media} dưới đây thể hiện tỉ lệ sử dụng tối thiểu một mạng xã hội (Snapchat, Instgram) của 08 nhóm tương ứng với 08 loại tình trạng việc làm. Đường màu đỏ thể hiện tỉ lệ sử dụng trung bình của toàn thể 08 nhóm nêu trên (18\%).
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{figures/using_social_media.png}
     \caption{Tỉ lệ sử dụng mạng xã hội của các nhóm tình trạng việc làm}
@@ -71,7 +71,12 @@ Như đã phân tích ở các phần trên, trường dữ liệu email\_total 
 \textbf{Xét nhóm quan sát A}
 
 Ta có:
-
+\begin{equation*}
+\begin{aligned}
+P(\mathrm{wrkstat} = x \vert \beta_0, \beta_1,..., \beta_{19}) = \mathrm{logit}&(\beta_0 + \beta_1 * \text{email\_total} + ... + \beta_{18} * \text{social\_media\_NO} \\
+   & + \beta_{19} * \text{social\_media\_YES})
+\end{aligned}
+\end{equation*}
 
 Với $x \in\{$'Retired', 'Working fulltime', 'Working parttime', 'Unempl, laid off', 'Temp not working', 'Keeping house', 'School', 'Other'\}
 
@@ -93,7 +98,7 @@ $$
 
 Kết quả ước lượng thu được từ tập dữ liệu đã cho được thể hiện trong hình \ref{fig:beta1819}:
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{figures/beta1819.png}
     \caption{Kết quả ước lượng tham số $\beta_{18}, \beta_{19}$ mô hình hồi quy multinomial logistic đối với Nhóm A}
@@ -106,7 +111,12 @@ Từ kết quả trên, với mức ý nghĩa $5 \%$ ta có thể bác bỏ $H_{
 \textbf{Xét nhóm quan sát B}
 
 Ta có:
-
+\begin{equation*}
+\begin{aligned}
+P(\mathrm{wrkstat} = x \vert \beta_0, \beta_1,..., \beta_{18}) = \mathrm{logit}&(\beta_0 + ... + \beta_{17} * \text{social\_media\_NO} \\
+   & + \beta_{18} * \text{social\_media\_YES})
+\end{aligned}
+\end{equation*}
 
 Với $x \in\{$'Retired', 'Working fulltime', 'Working parttime', 'Unempl, laid off', 'Temp not working', 'Keeping house', 'School', 'Other'\}
 
@@ -127,7 +137,7 @@ $$
 
 Kết quả ước lượng thu được từ tập dữ liệu đã cho được thể hiện trong hình \ref{fig:beta1718}:
 
-\begin{figure}[h!]
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.6\textwidth]{figures/beta1718.png}
     \caption{Kết quả ước lượng tham số $\beta_{17}, \beta_{18}$ mô hình hồi quy multinomial logistic đối với Nhóm B}
